@@ -2,10 +2,10 @@
 <html lang="ar" dir="rtl" class="scroll-smooth select-none">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Moto sud+ | دراجات الجنوب +</title>
     
-    <!-- Supabase API -->
+    <!-- Supabase Cloud Engine -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- TailWind CSS & Premium Fonts -->
@@ -27,7 +27,7 @@
                     animation: {
                         'glow-pulse': 'glowPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'marquee-fast': 'marquee 20s linear infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
                         'pulse-pistache': 'pulsePistache 2s infinite',
                     },
                     keyframes: {
@@ -35,18 +35,9 @@
                             '0%, 100%': { opacity: '0.6', boxShadow: '0 0 15px rgba(161, 232, 39, 0.2)' },
                             '50%': { opacity: '1', boxShadow: '0 0 30px rgba(161, 232, 39, 0.6)' }
                         },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(50%)' }
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        pulsePistache: {
-                            '0%, 100%': { filter: 'drop-shadow(0 0 8px rgba(161, 232, 39, 0.4))' },
-                            '50%': { filter: 'drop-shadow(0 0 25px rgba(161, 232, 39, 1))' }
-                        }
+                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(50%)' } },
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulsePistache: { '0%, 100%': { filter: 'drop-shadow(0 0 8px rgba(161, 232, 39, 0.4))' }, '50%': { filter: 'drop-shadow(0 0 25px rgba(161, 232, 39, 1))' } }
                     }
                 }
             }
@@ -63,6 +54,7 @@
             font-family: 'Alexandria', 'Outfit', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .mobile-container {
@@ -96,11 +88,7 @@
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
 
-        .premium-card-shadow {
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0,0,0,0.4);
-        }
-
-        /* شريط المباع الإحترافي بدون تظليل الصورة */
+        /* Sold Ribbon without Dark Mode Overlay */
         .ribbon-sold-pro {
             position: absolute; 
             top: 25px; 
@@ -139,19 +127,16 @@
                 <span>✦ بيع , قطع غيار , اكسسوارات ✦</span>
                 <span>✦ Moto sud+ • دراجات الجنوب + ✦</span>
                 <span>✦ تسليم فوري • ضمان الجودة العالية ✦</span>
-                <span>✦ بيع , قطع غيار , اكسسوارات ✦</span>
             </div>
         </div>
 
         <!-- Sticky Header -->
         <header class="premium-blur-header sticky top-0 z-40 px-5 py-3 flex justify-between items-center shadow-[0_5px_20px_rgba(0,0,0,0.5)]">
-            
-            <a href="https://maps.app.goo.gl/SFb9dD31zyFV4cdK9?g_st=ic" target="_blank" class="flex items-center gap-2 bg-neutral-950 border border-white/5 px-3 py-1.5 rounded-full cursor-pointer transition-all duration-300 shadow-[0_0_10px_rgba(161,232,39,0.1)] hover:shadow-[0_0_15px_rgba(161,232,39,0.4)]">
+            <a href="https://maps.app.goo.gl/SFb9dD31zyFV4cdK9?g_st=ic" target="_blank" class="flex items-center gap-2 bg-neutral-950 border border-white/5 px-3 py-1.5 rounded-full shadow-[0_0_10px_rgba(161,232,39,0.1)] active:scale-95 transition-all">
                 <i class="fa-solid fa-location-dot text-motopistache text-xs animate-pulse"></i>
                 <span id="label-showroom" class="text-[9px] font-black tracking-widest text-whitepure uppercase font-sans">El Oued, Algérie</span>
             </a>
             
-            <!-- Logo area without long press -->
             <div class="flex items-center justify-center p-2 rounded-full h-16 relative">
                 <div class="flex flex-col items-center justify-center relative z-10 leading-none">
                     <h1 class="text-lg font-black tracking-tighter uppercase brand-glow-text font-sans" dir="ltr">Moto sud+</h1>
@@ -164,7 +149,7 @@
             </button>
         </header>
 
-        <!-- ================= BIOMETRIC SECRET SCREEN (PIN VERIFICATION) ================= -->
+        <!-- ================= BIOMETRIC SECRET SCREEN (PIN 7777 ONLY) ================= -->
         <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
             <div class="w-80 p-8 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)] relative transform scale-95 transition-transform duration-300" id="pinBox">
                 <button onclick="closeBiometricPinOverlay()" class="absolute top-4 left-4 text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -172,8 +157,8 @@
                     <div class="w-16 h-16 rounded-full bg-motopistache/10 flex items-center justify-center">
                         <i class="fa-solid fa-shield-halved text-motopistache text-3xl animate-pulse-pistache"></i>
                     </div>
-                    <h3 class="text-sm font-black text-white uppercase tracking-wider" id="lbl-auth-title">نظام إدارة المعرض</h3>
-                    <p class="text-[10px] text-zinc-400 font-bold" id="lbl-auth-desc">أدخل الرمز السري الخاص بالمالك (7777)</p>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider">نظام إدارة المعرض</h3>
+                    <p class="text-[10px] text-zinc-400 font-bold">أدخل الرمز السري الخاص بالمالك (7777)</p>
                 </div>
                 <div class="flex justify-center gap-2">
                     <input type="password" maxlength="4" id="pinInput" class="w-48 mx-auto bg-black border border-white/10 rounded-2xl p-4 text-center text-2xl tracking-[1em] font-black text-motopistache focus:outline-none focus:border-motopistache block transition-all" oninput="handlePinSubmission()" dir="ltr">
@@ -181,7 +166,7 @@
             </div>
         </div>
 
-        <!-- ================= OWNER ADVANCED COMMAND CENTER (ADMIN COCKPIT) ================= -->
+        <!-- ================= ADMIN COCKPIT ================= -->
         <section id="ownerCommandCenter" class="hidden mx-4 mt-4 p-5 bg-cardgray rounded-3xl border border-motopistache/20 space-y-6 shadow-[0_0_30px_rgba(161,232,39,0.08)] animate-fade-in relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-motopistache/20 rounded-full blur-2xl pointer-events-none"></div>
 
@@ -222,60 +207,27 @@
                 </div>
                 
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">الماركة (Marque)</label>
-                        <input type="text" id="addBrand" placeholder="مثال: YAMAHA" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">الموديل (Modèle)</label>
-                        <input type="text" id="addModel" placeholder="مثال: TMAX 560" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
-                    </div>
+                    <input type="text" id="addBrand" placeholder="الماركة (ex: YAMAHA)" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
+                    <input type="text" id="addModel" placeholder="الموديل (ex: TMAX)" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
                 </div>
 
                 <div class="grid grid-cols-3 gap-3">
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">السنة (Année)</label>
-                        <input type="number" id="addYear" placeholder="2024" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none text-center" dir="ltr">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">السعر (Prix)</label>
-                        <input type="text" id="addPrice" placeholder="مثال: 320M" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none text-center" dir="ltr">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">العداد (KM)</label>
-                        <input type="text" id="addKm" placeholder="00 km" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none text-center" dir="ltr">
-                    </div>
+                    <input type="number" id="addYear" placeholder="السنة" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white text-center" dir="ltr">
+                    <input type="text" id="addPrice" placeholder="السعر" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white text-center" dir="ltr">
+                    <input type="text" id="addKm" placeholder="العداد" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white text-center" dir="ltr">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">المحرك (Moteur)</label>
-                        <input type="text" id="addEngine" placeholder="مثال: 560cc" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[9px] text-zinc-400 font-bold">اللون (Couleur)</label>
-                        <input type="text" id="addColor" placeholder="مثال: Noir Mat" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
-                    </div>
+                    <input type="text" id="addEngine" placeholder="المحرك (ex: 560cc)" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:border-motopistache" dir="ltr">
+                    <input type="text" id="addColor" placeholder="اللون" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:border-motopistache" dir="ltr">
                 </div>
 
-                <div class="bg-cardgray border border-white/5 p-4 rounded-xl space-y-3 shadow-inner">
-                    <span class="text-[10px] font-black text-motopistache block">حالة الهيكل / كاريناج الدراجة</span>
-                    <p class="text-[9px] text-zinc-500 font-bold">حدد الأجزاء التي تحتوي على رتوشات أو عيوب:</p>
-                    <div class="grid grid-cols-2 gap-3 text-[10px] font-bold text-white bg-black p-3 rounded-lg border border-white/5" dir="ltr">
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="p_hood" class="accent-motopistache w-3 h-3"> Réservoir</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="p_fdoor" class="accent-motopistache w-3 h-3"> Carénage AV</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="p_bdoor" class="accent-motopistache w-3 h-3"> Carénage Latéral</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="p_bwing" class="accent-motopistache w-3 h-3"> Coque AR</label>
-                    </div>
-                    <input type="text" id="addPaintVerdict" placeholder="وصف حالة الهيكل (مثال: نقية 100%...)" required class="w-full bg-black rounded-lg p-3 text-xs text-white border border-white/5 focus:border-motopistache transition-all">
-                </div>
+                <input type="text" id="addPaintVerdict" placeholder="حالة الهيكل (مثال: نقية 100%...)" required class="w-full bg-black rounded-lg p-3 text-xs text-white border border-white/5 focus:border-motopistache">
 
                 <div class="relative w-full bg-cardgray border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center gap-3 hover:border-motopistache transition-all group">
                     <input type="file" id="imageInputLoader" accept="image/*" multiple required class="absolute inset-0 opacity-0 cursor-pointer z-10">
-                    <div class="w-12 h-12 rounded-full bg-motopistache/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-cloud-arrow-up text-motopistache text-xl"></i>
-                    </div>
-                    <span id="compressorLog" class="text-[10px] text-zinc-400 font-bold text-center">اضغط لرفع صور الدراجة بجودة عالية<br><span class="text-zinc-600">(يتم ضغطها تلقائياً لتسريع الموقع)</span></span>
+                    <i class="fa-solid fa-cloud-arrow-up text-motopistache text-2xl group-hover:scale-110 transition-transform"></i>
+                    <span id="compressorLog" class="text-[10px] text-zinc-400 font-bold text-center">اضغط لرفع صور الدراجة بجودة HD فائقة</span>
                 </div>
 
                 <button type="submit" id="btnSubmitAdd" class="w-full bg-motopistache hover:bg-lime-500 text-black py-4 rounded-xl font-black text-sm shadow-[0_5px_20px_rgba(161,232,39,0.3)] transition-all active:scale-95">
@@ -299,36 +251,22 @@
                 <input type="text" id="search-input" oninput="renderShowroomGrid()" placeholder="ابحث عن دراجة، ماركة، سعر..." class="w-full bg-cardgray border border-white/5 rounded-2xl pr-11 pl-4 py-3.5 text-xs font-bold text-white placeholder-zinc-600 focus:outline-none focus:border-motopistache shadow-inner transition-all">
             </div>
             
-            <div class="flex overflow-x-auto gap-2 py-1 hide-scrollbar" id="brand-scroller-track" dir="ltr">
-            </div>
+            <div class="flex overflow-x-auto gap-2 py-1 hide-scrollbar" id="brand-scroller-track" dir="ltr"></div>
         </div>
 
-        <!-- SHOWROOM LIVE MOTO STACKS -->
+        <!-- SHOWROOM LIVE MOTO STACKS (DEFAULT LANDING VIEW) -->
         <main class="p-4 space-y-5" id="cars-grid-feed"></main>
 
-        <!-- LUXURY SOCIAL CONNECTIONS & GPS ROUTING -->
+        <!-- SOCIAL LINKS -->
         <div class="p-6 border-t border-white/5 bg-neutral-950/40 text-center space-y-6 mt-12 mb-12">
-            <div class="space-y-1">
-                <h4 class="text-sm font-black text-motopistache uppercase tracking-widest">تواصل مع Moto sud+</h4>
-                <p class="text-[10px] text-zinc-400 font-bold">تابعنا على شبكات التواصل الاجتماعي ليصلك كل جديد</p>
-            </div>
-            
+            <h4 class="text-sm font-black text-motopistache uppercase tracking-widest">تواصل مع Moto sud+</h4>
             <div class="flex justify-center gap-4" dir="ltr">
-                <a href="https://www.tiktok.com/@motosudplus1?_r=1&_t=ZS-98375MNbxaR" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-black active:scale-95 transition-all duration-300 shadow-md group">
-                    <i class="fa-brands fa-tiktok text-xl group-hover:scale-110 transition-transform"></i>
-                </a>
-                
-                <a href="https://www.facebook.com/profile.php?id=100063638763446" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-blue-600 active:scale-95 transition-all duration-300 shadow-md group">
-                    <i class="fa-brands fa-facebook-f text-xl group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://maps.app.goo.gl/SFb9dD31zyFV4cdK9?g_st=ic" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-motopistache hover:text-black active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(161,232,39,0.1)] hover:shadow-[0_0_20px_rgba(161,232,39,0.5)] group">
-                    <i class="fa-solid fa-map-location-dot text-xl group-hover:animate-pulse"></i>
-                </a>
+                <a href="https://www.tiktok.com/@motosudplus1" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-md"><i class="fa-brands fa-tiktok text-xl"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100063638763446" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-md"><i class="fa-brands fa-facebook-f text-xl"></i></a>
             </div>
         </div>
 
-        <!-- 🔴 التعديل: استبدال زر الاتصال بزر الإدارة -->
+        <!-- BOTTOM NAV BAR -->
         <nav class="premium-blur-header fixed bottom-0 w-full max-w-[440px] flex justify-around items-center pt-3.5 pb-6 z-40">
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-motopistache transition-all hover:scale-105">
                 <i class="fa-solid fa-motorcycle text-lg mb-1"></i>
@@ -346,163 +284,100 @@
 
     </div>
 
-    <!-- ================= PREMIUM DETAILS BOTTOM SHEET ================= -->
-    <div id="detailSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
+    <!-- DETAILS MODAL -->
+    <div id="detailSheetModal" class="fixed inset-0 z-[500] hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeDetailSheet()"></div>
-        
-        <!-- 🔴 التعديل: زر الإغلاق الثابت والمميز -->
-        <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+        <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-3xl border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-lg">
             <i class="fa-solid fa-xmark text-xl"></i>
         </button>
 
-        <div class="relative w-full max-w-[440px] mx-auto h-[95vh] bg-metalic border-t border-motopistache/30 rounded-t-[32px] flex flex-col transition-transform duration-500 shadow-[0_-10px_40px_rgba(161,232,39,0.1)]" id="detailSheetContainer">
+        <div class="relative w-full max-w-[440px] mx-auto h-[92vh] bg-metalic border-t border-motopistache/30 rounded-t-[32px] flex flex-col transition-transform duration-500" id="detailSheetContainer">
             <div class="w-12 h-1.5 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
 
             <div class="flex-1 overflow-y-auto pb-28 hide-scrollbar">
-                
                 <div class="relative h-80 bg-black" dir="ltr">
-                    <div id="modal-image-swiper" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" onscroll="syncSwiperImageCounter()">
-                    </div>
-                    <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-metalic to-transparent pointer-events-none"></div>
+                    <div id="modal-image-swiper" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" onscroll="syncSwiperImageCounter()"></div>
                     <div class="absolute bottom-4 left-4 z-10">
-                        <span id="modal-year-badge" class="bg-motopistache text-black text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(161,232,39,0.4)]">2024</span>
-                        <h2 id="modal-title" class="text-2xl font-black text-white mt-1 leading-none tracking-tight">MOTO</h2>
-                    </div>
-                    <div class="absolute bottom-4 right-4 bg-black/50 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold">
-                        <i class="fa-solid fa-images text-motopistache mr-1"></i> <span id="gallery-indicator-counter">1 / 1</span>
+                        <span id="modal-year-badge" class="bg-motopistache text-black text-[10px] font-black px-3 py-1 rounded"></span>
+                        <h2 id="modal-title" class="text-2xl font-black text-white mt-1"></h2>
                     </div>
                 </div>
 
                 <div class="p-5 flex justify-between items-center bg-cardgray border-b border-white/5">
                     <span class="text-zinc-400 text-xs font-bold" id="label-price-requested">السعر المطلوب</span>
-                    <span id="modal-price" class="text-lg font-black text-white bg-motopistache/10 border border-motopistache/30 px-4 py-2 rounded-xl text-shadow-sm" dir="ltr">00 DA</span>
+                    <span id="modal-price" class="text-lg font-black text-white bg-motopistache/10 border border-motopistache/30 px-4 py-2 rounded-xl" dir="ltr"></span>
                 </div>
 
-                <div class="flex border-b border-white/5 bg-cardgray text-center text-[11px] font-black">
-                    <button onclick="switchDetailsTabPane('specs')" id="tab-specs" class="tab-btn flex-1 py-4 border-b-2 border-motopistache text-motopistache transition shadow-[0_4px_15px_-5px_rgba(161,232,39,0.2)]">التفاصيل الفنية</button>
-                    <button onclick="switchDetailsTabPane('paint')" id="tab-paint" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-zinc-500 transition">حالة الهيكل</button>
-                </div>
-
-                <div id="pane-specs" class="p-4 space-y-3" dir="ltr">
+                <div class="p-4 space-y-3" dir="ltr">
                     <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-end gap-3 text-right">
-                            <div>
-                                <span class="text-[9px] text-zinc-500 font-bold" id="label-km">KM</span>
-                                <strong id="spec-km" class="text-xs font-black text-white block mt-0.5">-</strong>
-                            </div>
-                            <div class="w-10 h-10 bg-motopistache/10 rounded-xl flex items-center justify-center text-motopistache text-lg"><i class="fa-solid fa-gauge-high"></i></div>
+                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-between text-right">
+                            <div><span class="text-[9px] text-zinc-500 font-bold">KM</span><strong id="spec-km" class="text-xs font-black text-white block"></strong></div>
+                            <i class="fa-solid fa-gauge-high text-motopistache text-lg"></i>
                         </div>
-                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-end gap-3 text-right">
-                            <div>
-                                <span class="text-[9px] text-zinc-500 font-bold" id="label-engine">Moteur</span>
-                                <strong id="spec-engine" class="text-xs font-black text-white block mt-0.5">-</strong>
-                            </div>
-                            <div class="w-10 h-10 bg-motopistache/10 rounded-xl flex items-center justify-center text-motopistache text-lg"><i class="fa-solid fa-fire"></i></div>
+                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-between text-right">
+                            <div><span class="text-[9px] text-zinc-500 font-bold">Moteur</span><strong id="spec-engine" class="text-xs font-black text-white block"></strong></div>
+                            <i class="fa-solid fa-fire text-motopistache text-lg"></i>
                         </div>
-                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-end gap-3 text-right col-span-2">
-                            <div>
-                                <span class="text-[9px] text-zinc-500 font-bold" id="label-color">Couleur</span>
-                                <strong id="spec-color" class="text-xs font-black text-white block mt-0.5">-</strong>
-                            </div>
-                            <div class="w-10 h-10 bg-motopistache/10 rounded-xl flex items-center justify-center text-motopistache text-lg"><i class="fa-solid fa-palette"></i></div>
+                        <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-between text-right col-span-2">
+                            <div><span class="text-[9px] text-zinc-500 font-bold">Couleur</span><strong id="spec-color" class="text-xs font-black text-white block"></strong></div>
+                            <i class="fa-solid fa-palette text-motopistache text-lg"></i>
                         </div>
                     </div>
                 </div>
 
-                <div id="pane-paint" class="p-4 space-y-3 hidden">
-                    <div class="bg-cardgray border border-white/5 rounded-3xl p-5 shadow-xl">
-                        <div class="flex justify-between items-center mb-4">
-                            <h4 class="text-xs font-black text-white" id="label-paint-scan-title">فحص الهيكل الدقيق</h4>
-                            <span class="bg-laserred/10 border border-laserred/20 text-laserred text-[9px] font-black px-3 py-1 rounded" id="badge-paint-label">ملاحظات</span>
-                        </div>
-                        
-                        <div class="flex justify-center py-5 bg-[#050508] rounded-2xl border border-white/5 mb-5 shadow-inner">
-                            <svg class="w-56 h-auto" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="90" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
-                                <circle cx="90" cy="140" r="15" fill="#52525b"/>
-                                <circle cx="310" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
-                                <circle cx="310" cy="140" r="15" fill="#52525b"/>
-                                <path d="M120 140 L160 80 L240 80 L280 140 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2"/>
-                                <path id="svg-hood" d="M160 80 C180 40, 240 40, 250 80 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                <path id="svg-front-door" d="M250 80 L280 40 L310 90 L260 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                <path id="svg-back-door" d="M180 80 L250 80 L230 130 L160 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                <path id="svg-back-wing" d="M160 80 L80 60 L60 80 L120 100 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                <line x1="280" y1="40" x2="310" y2="140" stroke="#52525b" stroke-width="6"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="text-[10px] text-zinc-500 space-y-2 font-bold mb-4">
-                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-laserred inline-block shadow-[0_0_8px_rgba(244,63,94,0.4)]"></span> <span id="lbl-paint-painted">قطعة بها رتوشات / خدوش</span></div>
-                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-zinc-800 inline-block"></span> <span id="lbl-paint-clean">قطعة سليمة وأصلية</span></div>
-                        </div>
-                        <p id="paint-verdict" class="text-xs font-bold text-white bg-cardgray border border-white/5 p-4 rounded-xl leading-relaxed border-r-4 border-r-motopistache">-</p>
+                <div class="p-4">
+                    <div class="bg-cardgray border border-white/5 rounded-3xl p-5">
+                        <h4 class="text-xs font-black text-white mb-2">ملاحظات الهيكل</h4>
+                        <p id="paint-verdict" class="text-xs font-bold text-white bg-black border border-white/5 p-4 rounded-xl"></p>
                     </div>
                 </div>
             </div>
 
             <div class="absolute bottom-0 w-full p-4 bg-cardgray/95 backdrop-blur-md border-t border-white/5 pb-6 flex z-50">
-                <a id="modal-whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-4 rounded-2xl flex items-center justify-center active:scale-95 transition-all text-sm shadow-lg shadow-green-600/20">
-                    <i class="fa-brands fa-whatsapp text-xl ml-2"></i> <span id="label-contact-seller">تواصل مع البائع للتفاوض</span>
+                <a id="modal-whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-4 rounded-2xl flex items-center justify-center text-sm gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> <span id="label-contact-seller">تواصل مع البائع للتفاوض</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- ================= TRADE-IN EXCHANGE SHEET (REPRISE SYSTEM) ================= -->
+    <!-- REPRISE MODAL -->
     <div id="repriseSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
-        <div class="relative w-full max-w-[440px] mx-auto h-[88vh] bg-metalic rounded-t-3xl border-t border-motopistache/30 flex flex-col transition-transform duration-500 shadow-[0_-10px_40px_rgba(161,232,39,0.1)]" id="repriseSheetContainer">
+        <div class="relative w-full max-w-[440px] mx-auto h-[88vh] bg-metalic rounded-t-3xl border-t border-motopistache/30 flex flex-col" id="repriseSheetContainer">
             <div class="w-12 h-1.5 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
             <div class="px-5 py-3 border-b border-white/5 flex justify-between items-center">
                 <h3 class="text-lg font-black text-white" id="label-reprise-title">طلب استبدال دراجة (Reprise)</h3>
-                <button onclick="closeRepriseModal()" class="w-8 h-8 rounded-full bg-white/5 text-zinc-400 flex items-center justify-center hover:bg-motopistache hover:text-black active:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeRepriseModal()" class="text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-
-            <div class="flex-1 overflow-y-auto p-5 space-y-5 hide-scrollbar">
-                <p class="text-xs text-zinc-400 font-bold leading-relaxed" id="label-reprise-desc">اقترح دراجتك الحالية. سيقوم فريقنا بمعاينتها وتقييم الفارق المادي بينها وبين الدراجة التي ترغب بها من معرضنا.</p>
-                <div class="space-y-1.5">
-                    <label class="text-[10px] text-motopistache font-black" id="label-your-car">معلومات دراجتك الحالية</label>
-                    <input type="text" id="rep-car-name" placeholder="مثال: YAMAHA MT-09" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
-                </div>
+            <div class="flex-1 overflow-y-auto p-5 space-y-4 hide-scrollbar">
+                <p class="text-xs text-zinc-400 font-bold" id="label-reprise-desc">اقترح دراجتك الحالية وتقييم الفارق المادي.</p>
+                <input type="text" id="rep-car-name" placeholder="مثال: YAMAHA MT-09" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white" dir="ltr">
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 font-bold" id="label-year">سنة الصنع (Année)</label>
-                        <input type="number" id="rep-car-year" placeholder="2019" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white focus:outline-none text-center" dir="ltr">
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] text-zinc-400 font-bold" id="label-km">المسافة (KM)</label>
-                        <input type="text" id="rep-car-km" placeholder="14 000 km" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white focus:outline-none text-center" dir="ltr">
-                    </div>
+                    <input type="number" id="rep-car-year" placeholder="2019" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white text-center" dir="ltr">
+                    <input type="text" id="rep-car-km" placeholder="14 000 km" class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white text-center" dir="ltr">
                 </div>
-                <div class="space-y-1.5">
-                    <label class="text-[10px] text-zinc-400 font-bold" id="label-paint">حالة الهيكل (Carénage)</label>
-                    <textarea id="rep-car-paint" placeholder="مثال: نقية 100%، أو فيها خدوش خفيفة..." class="w-full bg-cardgray border border-white/5 rounded-xl px-4 py-3.5 text-xs font-bold text-white h-24 resize-none focus:outline-none focus:border-motopistache"></textarea>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-[10px] text-motopistache font-black" id="label-target">الدراجة التي تريدها من المعرض</label>
-                    <select id="rep-car-target" class="w-full bg-cardgray border border-white/5 rounded-xl p-3.5 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr"></select>
-                </div>
+                <select id="rep-car-target" class="w-full bg-cardgray border border-white/5 rounded-xl p-3.5 text-xs font-bold text-white" dir="ltr"></select>
             </div>
-
             <div class="p-4 bg-cardgray/95 border-t border-white/5 pb-6">
-                <button onclick="sendReprisePayload()" class="w-full bg-motopistache hover:bg-lime-500 text-black font-black py-4 rounded-2xl text-sm shadow-[0_5px_20px_rgba(161,232,39,0.3)] transition-all active:scale-95" id="btn-submit-proposal">إرسال العرض الآن</button>
+                <button onclick="sendReprisePayload()" class="w-full bg-motopistache text-black font-black py-4 rounded-2xl text-sm" id="btn-submit-proposal">إرسال العرض الآن</button>
             </div>
         </div>
     </div>
 
-    <!-- HIERARCHICAL NOTIFICATION INTERACTION (TOAST) -->
-    <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-24 opacity-0 transition-all duration-500">
-        <div class="bg-cardgray border border-motopistache/30 text-white px-5 py-3.5 rounded-full shadow-[0_5px_30px_rgba(161,232,39,0.3)] flex items-center gap-3">
+    <!-- TOAST ALERT -->
+    <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] transform -translate-y-24 opacity-0 transition-all duration-500">
+        <div class="bg-cardgray border border-motopistache/30 text-white px-5 py-3.5 rounded-full shadow-2xl flex items-center gap-3">
             <i class="fa-solid fa-circle-check text-motopistache text-lg"></i>
             <span id="toast-txt" class="font-bold text-xs">تمت العملية بنجاح</span>
         </div>
     </div>
 
-    <!-- ================= MASTER ENGINE CONTROLLER JAVASCRIPT ================= -->
+    <!-- ================= JAVASCRIPT ENGINE ================= -->
     <script>
         const WHATSAPP_CONTACT_HOTLINE = "213664925785";
 
-        // 🔴 التعديل: إعداد Supabase مع الكود الذي أرسلته
+        // ================= SUPABASE CLOUD LIVE CONNECTION =================
         const SUPABASE_URL = "https://fatgvakfpxsycrjleknt.supabase.co"; 
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGd2YWtmcHhzeWNyamxla250Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MjY2MjQsImV4cCI6MjEwMDIwMjYyNH0.7_DSLql8sjTSjnUSYVJZIwGVTPJ9lhOiG192oJKBOM0";
         
@@ -513,18 +388,14 @@
 
         const demoWarehouseVehicles = [
             {
-                id: 1, marque: "YAMAHA", modele: "TMAX 560 Tech Max", annee: "2023", prix: "420M", km: "8 000 km", moteur: "560cc", boite: "AUTOMATIQUE", couleur: "Dark Petrol",
-                sbiha: "دراجة بحالة الوكالة، خالية من العيوب.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                negociable: true, status: "disponible",
-                images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80"]
+                id: 1, marque: "YAMAHA", modele: "TMAX 560 Tech Max", annee: "2023", prix: "420M", km: "8 000 km", moteur: "560cc", couleur: "Dark Petrol",
+                sbiha: "دراجة بحالة الوكالة، خالية من العيوب.", status: "disponible",
+                images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=85"]
             },
             {
-                id: 2, marque: "BMW", modele: "S1000RR", annee: "2024", prix: "750M", km: "2 000 km", moteur: "999cc 210ch", boite: "MANUELLE", couleur: "M Motorsport",
-                sbiha: "نقية 100%، مع اكزوزت Akrapovic.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                negociable: false, status: "disponible",
-                images: ["https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=600&q=80"]
+                id: 2, marque: "BMW", modele: "S1000RR", annee: "2024", prix: "750M", km: "2 000 km", moteur: "999cc 210ch", couleur: "M Motorsport",
+                sbiha: "نقية 100%، مع اكزوزت Akrapovic.", status: "disponible",
+                images: ["https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=800&q=85"]
             }
         ];
 
@@ -532,83 +403,254 @@
             lang: 'ar',
             currentBrand: 'Tous',
             vehicles: [],
-            activeViewingIndex: null,
-            isOwnerSession: false,
+            selectedFiles: [],
+            isOwnerSession: false, 
             temporaryImages64: []
         };
 
         const lexicons = {
             fr: {
-                showroom: "El Oued, Algérie", searchPlaceholder: "Rechercher moto, marque...", tous: "Tous",
-                specsTab: "Fiche Technique", paintTab: "Carénage", paintScan: "Scanner Carénage",
-                sbihaLabel: "État Carénage", repriseTitle: "Système d'Échange (Reprise)",
-                repriseDesc: "Proposez votre moto actuelle. Notre équipe évaluera la différence de prix.", yourCar: "Votre Moto",
-                year: "Année", km: "KM", paint: "État Carénage", target: "Moto souhaitée", sendProposal: "Envoyer l'offre",
-                successToast: "Opération traitée avec succès !", errorFields: "Champs obligatoires !", discover: "Catalogue",
-                reprise: "Échange", admin: "Administration", paintedZone: "Zone touchée / Rayure", cleanZone: "Zone intacte",
-                touchDetails: "Détails Uniquement", price: "Prix demandé", engine: "Moteur", color: "Couleur",
-                contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDUE", totalBikes: "Total Motos",
-                addedSuccess: "Ajouté au catalogue avec succès 🏍️🔥" // 🔴 التعديل
+                showroom: "El Oued, Algérie", searchPlaceholder: "Rechercher...", tous: "Tous",
+                repriseTitle: "Système d'Échange", yourCar: "Votre Moto", year: "Année", km: "KM",
+                sendProposal: "Envoyer l'offre", successToast: "Opération réussie !", errorFields: "Champs requis !",
+                discover: "Catalogue", reprise: "Échange", admin: "Administration", price: "Prix", engine: "Moteur",
+                color: "Couleur", contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDUE", touchDetails: "Détails",
+                addedSuccess: "Ajouté au catalogue avec succès 🏍️🔥"
             },
             ar: {
                 showroom: "الوادي، الجزائر", searchPlaceholder: "ابحث عن دراجة، ماركة...", tous: "الكل",
-                specsTab: "التفاصيل الفنية", paintTab: "حالة الهيكل", paintScan: "فحص الهيكل الدقيق",
-                sbihaLabel: "ملاحظات", repriseTitle: "طلب استبدال دراجة (Reprise)",
-                repriseDesc: "اقترح دراجتك الحالية. سيقوم فريقنا بمعاينتها وتقييم الفارق المادي بينها وبين الدراجة المطلوبة.", yourCar: "معلومات دراجتك الحالية",
-                year: "سنة الصنع", km: "المسافة المقطوعة", paint: "حالة الهيكل (Carénage)", target: "الدراجة التي تريدها من المعرض", sendProposal: "إرسال العرض الآن",
-                successToast: "تمت العملية بنجاح!", errorFields: "يرجى ملء جميع الحقول!", discover: "المعرض",
-                reprise: "مبادلة", admin: "الإدارة", paintedZone: "قطعة بها رتوشات / خدوش", cleanZone: "قطعة سليمة وأصلية",
-                touchDetails: "التفاصيل فقط", price: "السعر المطلوب", engine: "المحرك", color: "اللون",
-                contactSeller: "تواصل مع البائع للتفاوض", soldBadge: "مباعة", totalBikes: "إجمالي الدراجات",
-                addedSuccess: "CBN RAHI TAL3AT F CATALOGUE 🏍️🔥" // 🔴 التعديل
+                repriseTitle: "طلب استبدال دراجة (Reprise)", yourCar: "معلومات دراجتك الحالية", year: "سنة الصنع",
+                km: "المسافة", sendProposal: "إرسال العرض الآن", successToast: "تمت العملية بنجاح!",
+                errorFields: "يرجى ملء جميع الحقول!", discover: "المعرض", reprise: "مبادلة", admin: "الإدارة",
+                price: "السعر المطلوب", engine: "المحرك", color: "اللون", contactSeller: "تواصل مع البائع للتفاوض",
+                soldBadge: "مباعة", touchDetails: "التفاصيل",
+                addedSuccess: "CBN RAHI TAL3AT F CATALOGUE 🏍️🔥"
             }
         };
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // 🔴 التعديل: جلب البيانات من Supabase عند التحميل
-            try {
-                if (supabaseClient) {
-                    const { data, error } = await supabaseClient.from('motorcycles').select('*').order('id', { ascending: false });
-                    if (data && data.length > 0) {
-                        state.vehicles = data;
-                    } else {
-                        state.vehicles = demoWarehouseVehicles;
-                    }
-                }
-            } catch (err) {
-                console.error("Supabase load error:", err);
-                state.vehicles = JSON.parse(localStorage.getItem('motosud_db')) || demoWarehouseVehicles;
-            }
+            setupImageCompressionAndSelection();
+            state.isOwnerSession = false;
+            document.getElementById('ownerCommandCenter').classList.add('hidden');
 
-            setupHiresOnTheFlyImageCompressor();
-            renderShowroomGrid();
-            buildRepriseTargetDropdown();
-            evalOwnerCockpitUi();
+            await loadBikesFromSupabase();
             applyLanguage();
         });
 
+        // ================= SUPABASE CLOUD & STORAGE ENGINE =================
+        async function loadBikesFromSupabase() {
+            if (supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient.from('motorcycles').select('*').order('id', { ascending: false });
+                    if (!error && data && data.length > 0) {
+                        state.vehicles = data;
+                        renderShowroomGrid();
+                        buildRepriseTargetDropdown();
+                        return;
+                    }
+                } catch(e) { console.error("Cloud Error", e); }
+            }
+            state.vehicles = demoWarehouseVehicles;
+            renderShowroomGrid();
+            buildRepriseTargetDropdown();
+        }
+
+        // Helper to convert Canvas to Blob for Supabase Bucket Upload
+        function compressImageToBlob(file, maxDim = 1000, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
+                        else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        canvas.toBlob((blob) => {
+                            if (blob) resolve(blob);
+                            else reject(new Error("Canvas blob conversion failed"));
+                        }, 'image/jpeg', quality);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function uploadImagesToSupabaseBucket(files) {
+            const uploadedUrls = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const blob = await compressImageToBlob(file, 1000, 0.82);
+                const fileName = `moto_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.jpg`;
+
+                // Upload Blob directly to public 'motos' bucket
+                const { data, error } = await supabaseClient.storage.from('motos').upload(fileName, blob, {
+                    contentType: 'image/jpeg',
+                    upsert: true
+                });
+
+                if (error) {
+                    console.error("Storage upload error:", error);
+                    // Fallback Base64 if storage bucket is not configured
+                    const base64Fallback = await new Promise(res => {
+                        const r = new FileReader();
+                        r.onload = ev => res(ev.target.result);
+                        r.readAsDataURL(blob);
+                    });
+                    uploadedUrls.push(base64Fallback);
+                } else {
+                    const { data: publicUrlData } = supabaseClient.storage.from('motos').getPublicUrl(fileName);
+                    uploadedUrls.push(publicUrlData.publicUrl);
+                }
+            }
+            return uploadedUrls;
+        }
+
+        function setupImageCompressionAndSelection() {
+            document.getElementById('imageInputLoader').addEventListener('change', function(e) {
+                state.selectedFiles = Array.from(e.target.files);
+                if (state.selectedFiles.length > 0) {
+                    document.getElementById('compressorLog').innerText = `تم اختيار ${state.selectedFiles.length} صور (جاهزة للرفع HD)`;
+                }
+            });
+        }
+
+        async function processNewLuxuryCar(e) {
+            e.preventDefault();
+            if (!state.selectedFiles || state.selectedFiles.length === 0) {
+                alert("يرجى إرفاق صورة واحدة على الأقل للدراجة.");
+                return;
+            }
+
+            const btn = document.getElementById('btnSubmitAdd');
+            btn.disabled = true;
+            btn.innerText = "جاري رفع الصور والتزامن مع السيرفر...";
+
+            try {
+                let imageUrls = [];
+                if (supabaseClient) {
+                    imageUrls = await uploadImagesToSupabaseBucket(state.selectedFiles);
+                }
+
+                const freshVehicle = {
+                    id: Date.now(),
+                    marque: document.getElementById('addBrand').value.toUpperCase(),
+                    modele: document.getElementById('addModel').value,
+                    annee: document.getElementById('addYear').value,
+                    prix: document.getElementById('addPrice').value,
+                    km: document.getElementById('addKm').value,
+                    moteur: document.getElementById('addEngine').value,
+                    couleur: document.getElementById('addColor').value,
+                    sbiha: document.getElementById('addPaintVerdict').value,
+                    status: 'disponible',
+                    images: imageUrls
+                };
+
+                // Save to Database Table
+                if (supabaseClient) {
+                    const { error } = await supabaseClient.from('motorcycles').insert([freshVehicle]);
+                    if (error) console.error("Database insert error:", error);
+                }
+
+                state.vehicles.unshift(freshVehicle);
+                renderShowroomGrid();
+                renderAdminStockList();
+                buildRepriseTargetDropdown();
+                calculateCorporateSaaSMetrics();
+
+                document.getElementById('ownerCarForm').reset();
+                state.selectedFiles = [];
+                document.getElementById('compressorLog').innerText = "اضغط لرفع صور الدراجة بجودة HD فائقة";
+
+                triggerToastNotification(lexicons[state.lang].addedSuccess);
+
+                setTimeout(() => {
+                    document.getElementById('cars-grid-feed').scrollIntoView({ behavior: 'smooth' });
+                }, 400);
+
+            } catch(err) {
+                console.error("Upload failed:", err);
+                alert("حدث خطأ أثناء الرفع. يرجى إعادة المحاولة.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `إضافة الدراجة للمعرض <i class="fa-solid fa-arrow-left ml-2"></i>`;
+            }
+        }
+
+        async function removeInventoryItem(id) {
+            if (confirm("هل أنت متأكد من حذف هذه الدراجة من الكاتالوج بشكل نهائي؟")) {
+                state.vehicles = state.vehicles.filter(v => v.id !== id);
+                if (supabaseClient) {
+                    await supabaseClient.from('motorcycles').delete().eq('id', id);
+                }
+                renderShowroomGrid();
+                renderAdminStockList();
+                buildRepriseTargetDropdown();
+                calculateCorporateSaaSMetrics();
+                triggerToastNotification("تم حذف الدراجة من المخزون.");
+            }
+        }
+
+        async function toggleInventoryStatus(id) {
+            let newStatus = '';
+            state.vehicles = state.vehicles.map(v => {
+                if (v.id === id) {
+                    v.status = v.status === 'disponible' ? 'vendue' : 'disponible';
+                    newStatus = v.status;
+                }
+                return v;
+            });
+            if (supabaseClient) {
+                await supabaseClient.from('motorcycles').update({ status: newStatus }).eq('id', id);
+            }
+            renderShowroomGrid();
+            renderAdminStockList();
+        }
+
+        // ================= AUTHENTICATION (CODE 7777 ONLY) =================
         function openBiometricPinOverlay() {
-            document.getElementById('biometricPinOverlay').classList.remove('hidden');
+            if (state.isOwnerSession) {
+                document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            const bg = document.getElementById('biometricPinOverlay');
+            const box = document.getElementById('pinBox');
+            bg.classList.remove('hidden');
+            setTimeout(() => {
+                bg.classList.add('opacity-100');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
             document.getElementById('pinInput').focus();
         }
 
         function closeBiometricPinOverlay() {
-            document.getElementById('biometricPinOverlay').classList.add('hidden');
+            const bg = document.getElementById('biometricPinOverlay');
+            const box = document.getElementById('pinBox');
+            bg.classList.remove('opacity-100');
+            box.classList.add('scale-95');
+            box.classList.remove('scale-100');
+            setTimeout(() => bg.classList.add('hidden'), 300);
             document.getElementById('pinInput').value = '';
         }
 
         function handlePinSubmission() {
             const input = document.getElementById('pinInput');
-            if (input.value === "7777") {
+            if (input.value === "7777") { 
                 state.isOwnerSession = true;
-                localStorage.setItem('isOwnerVerified', 'true');
                 closeBiometricPinOverlay();
                 evalOwnerCockpitUi();
-                triggerToastNotification("تم تفعيل نظام إدارة المالك بنجاح");
-                document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' });
+                triggerToastNotification("تم دخول نظام الإدارة بنجاح");
+                setTimeout(() => document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' }), 300);
                 input.value = '';
             } else if (input.value.length === 4) {
-                alert("الرمز السري غير صحيح.");
+                alert("الرمز السري غير صحيح. حاول مجدداً.");
                 input.value = '';
             }
         }
@@ -626,170 +668,22 @@
 
         function lockAdminSession() {
             state.isOwnerSession = false;
-            localStorage.setItem('isOwnerVerified', 'false');
             evalOwnerCockpitUi();
-            triggerToastNotification("تم قفل الجلسة بأمان");
+            triggerToastNotification("تم قفل لوحة الإدارة");
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function calculateCorporateSaaSMetrics() {
             document.getElementById('analyticsTotalCars').innerText = state.vehicles.length;
-            let accumulatedValue = 0;
-            state.vehicles.forEach(car => {
-                const cleanValue = parseFloat(car.prix.replace(/[^0-9.]/g, ''));
-                if (!isNaN(cleanValue)) {
-                    accumulatedValue += cleanValue;
-                }
+            let val = 0;
+            state.vehicles.forEach(c => {
+                const cl = parseFloat(c.prix.replace(/[^0-9.]/g, ''));
+                if (!isNaN(cl)) val += cl;
             });
-            document.getElementById('analyticsTotalValue').innerText = accumulatedValue.toFixed(0) + " M";
+            document.getElementById('analyticsTotalValue').innerText = val.toFixed(0) + " M";
         }
 
-        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE =================
-        function setupHiresOnTheFlyImageCompressor() {
-            document.getElementById('imageInputLoader').addEventListener('change', function(e) {
-                const files = e.target.files;
-                state.temporaryImages64 = [];
-                if (files.length > 0) {
-                    document.getElementById('compressorLog').innerText = `جاري ضغط ومعالجة 0/${files.length} صور...`;
-                    let resolved = 0;
-
-                    for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-                        const reader = new FileReader();
-                        reader.onload = function(evt) {
-                            const img = new Image();
-                            img.onload = function() {
-                                const canvas = document.createElement('canvas');
-                                const ctx = canvas.getContext('2d');
-                                
-                                // 🔴 التعديل: جودة عالية (1000px)
-                                const limitDim = 1000;
-                                let w = img.width;
-                                let h = img.height;
-                                
-                                if (w > h) {
-                                    if (w > limitDim) { h *= limitDim / w; w = limitDim; }
-                                } else {
-                                    if (h > limitDim) { w *= limitDim / h; h = limitDim; }
-                                }
-
-                                canvas.width = w;
-                                canvas.height = h;
-                                ctx.drawImage(img, 0, 0, w, h);
-                                
-                                const base64Webp = canvas.toDataURL('image/jpeg', 0.80);
-                                state.temporaryImages64.push(base64Webp);
-                                resolved++;
-
-                                document.getElementById('compressorLog').innerText = `تم تجهيز ${resolved}/${files.length} صور بنجاح`;
-                            };
-                            img.src = evt.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-            });
-        }
-
-        async function processNewLuxuryCar(e) {
-            e.preventDefault();
-            if (state.temporaryImages64.length === 0) {
-                alert("يرجى إرفاق صورة واحدة على الأقل للدراجة.");
-                return;
-            }
-
-            const freshVehicle = {
-                id: Date.now(),
-                marque: document.getElementById('addBrand').value.toUpperCase(),
-                modele: document.getElementById('addModel').value,
-                annee: document.getElementById('addYear').value,
-                prix: document.getElementById('addPrice').value,
-                km: document.getElementById('addKm').value,
-                moteur: document.getElementById('addEngine').value,
-                couleur: document.getElementById('addColor').value,
-                sbiha: document.getElementById('addPaintVerdict').value,
-                status: 'disponible',
-                sbihaZones: {
-                    hood: document.getElementById('p_hood').checked,
-                    frontDoor: document.getElementById('p_fdoor').checked,
-                    backDoor: document.getElementById('p_bdoor').checked,
-                    backWing: document.getElementById('p_bwing').checked,
-                    frontWing: false
-                },
-                images: state.temporaryImages64
-            };
-
-            state.vehicles.unshift(freshVehicle);
-            
-            renderShowroomGrid();
-            renderAdminStockList();
-            
-            // 🔴 التعديل: الرفع المباشر لـ Supabase
-            if (supabaseClient) {
-                try {
-                    await supabaseClient.from('motorcycles').insert([freshVehicle]);
-                } catch(err) { console.error("Upload error:", err); }
-            }
-
-            syncStateToLocalStorage();
-            
-            document.getElementById('ownerCarForm').reset();
-            state.temporaryImages64 = [];
-            document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-600'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
-            
-            triggerToastNotification(lexicons[state.lang].addedSuccess);
-            
-            setTimeout(() => {
-                document.getElementById('cars-grid-feed').scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-        }
-
-        async function removeInventoryItem(id) {
-            if (confirm("هل أنت متأكد من حذف هذه الدراجة من الكاتالوج بشكل نهائي؟")) {
-                state.vehicles = state.vehicles.filter(v => v.id !== id);
-                renderShowroomGrid();
-                renderAdminStockList();
-                
-                // 🔴 التعديل: الحذف المباشر من Supabase
-                if (supabaseClient) {
-                    try {
-                        await supabaseClient.from('motorcycles').delete().eq('id', id);
-                    } catch(err) {}
-                }
-
-                syncStateToLocalStorage();
-                triggerToastNotification("تم حذف الدراجة من المخزون.");
-            }
-        }
-
-        async function toggleInventoryStatus(id) {
-            let newStatus = '';
-            state.vehicles = state.vehicles.map(v => {
-                if (v.id === id) {
-                    v.status = v.status === 'disponible' ? 'vendue' : 'disponible';
-                    newStatus = v.status;
-                }
-                return v;
-            });
-            renderShowroomGrid();
-            renderAdminStockList();
-
-            // 🔴 التعديل: التحديث في Supabase
-            if (supabaseClient) {
-                try {
-                    await supabaseClient.from('motorcycles').update({ status: newStatus }).eq('id', id);
-                } catch(err) {}
-            }
-
-            syncStateToLocalStorage();
-        }
-
-        function syncStateToLocalStorage() {
-            localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
-            calculateCorporateSaaSMetrics();
-        }
-
-        // ================= DYNAMIC TRANSLATION RENDERERS =================
+        // ================= UI RENDERERS =================
         function switchLanguage() {
             state.lang = state.lang === 'fr' ? 'ar' : 'fr';
             applyLanguage();
@@ -797,15 +691,7 @@
 
         function applyLanguage() {
             document.getElementById('lang-btn').innerText = state.lang === 'fr' ? 'عربية' : 'FR';
-            
-            const html = document.documentElement;
-            if (state.lang === 'ar') {
-                html.setAttribute('dir', 'rtl');
-                document.body.style.fontFamily = "'Alexandria', sans-serif";
-            } else {
-                html.setAttribute('dir', 'ltr');
-                document.body.style.fontFamily = "'Outfit', sans-serif";
-            }
+            document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
 
             document.getElementById('label-showroom').innerText = lexicons[state.lang].showroom;
             document.getElementById('search-input').placeholder = lexicons[state.lang].searchPlaceholder;
@@ -814,24 +700,9 @@
             document.getElementById('nav-admin').innerText = lexicons[state.lang].admin;
 
             document.getElementById('label-price-requested').innerText = lexicons[state.lang].price;
-            document.getElementById('tab-specs').innerText = lexicons[state.lang].specsTab;
-            document.getElementById('tab-paint').innerText = lexicons[state.lang].paintTab;
-            document.getElementById('label-paint-scan-title').innerText = lexicons[state.lang].paintScan;
-            document.getElementById('badge-paint-label').innerText = lexicons[state.lang].sbihaLabel;
-            document.getElementById('lbl-paint-painted').innerText = lexicons[state.lang].paintedZone;
-            document.getElementById('lbl-paint-clean').innerText = lexicons[state.lang].cleanZone;
-            document.getElementById('label-contact-seller').innerText = lexicons[state.lang].contactSeller;
-            
             document.getElementById('label-km').innerText = lexicons[state.lang].km;
             document.getElementById('label-engine').innerText = lexicons[state.lang].engine;
             document.getElementById('label-color').innerText = lexicons[state.lang].color;
-
-            document.getElementById('label-reprise-title').innerText = lexicons[state.lang].repriseTitle;
-            document.getElementById('label-reprise-desc').innerText = lexicons[state.lang].repriseDesc;
-            document.getElementById('label-your-car').innerText = lexicons[state.lang].yourCar;
-            document.getElementById('btn-submit-proposal').innerText = lexicons[state.lang].sendProposal;
-            
-            document.getElementById('lbl-total-bikes').innerText = lexicons[state.lang].totalBikes;
 
             renderBrandFilterTrack();
             renderShowroomGrid();
@@ -858,104 +729,45 @@
             renderShowroomGrid();
         }
 
-        // ================= SHOWROOM GRID CAROUSELS =================
-        let liveFeedCarousels = {};
-        function igniteFeedCarouselScroller(id) {
-            const viewport = document.getElementById(`feed-image-track-${id}`);
-            if (!viewport) return;
-            if (liveFeedCarousels[id]) clearInterval(liveFeedCarousels[id]);
-
-            liveFeedCarousels[id] = setInterval(() => {
-                const size = viewport.offsetWidth;
-                let targetLocation = viewport.scrollLeft + size;
-                if (targetLocation >= viewport.scrollWidth - 10) { targetLocation = 0; }
-                viewport.scrollTo({ left: targetLocation, behavior: 'smooth' });
-            }, 3500);
-        }
-
-        function freezeFeedCarouselScroller(id) {
-            if (liveFeedCarousels[id]) clearInterval(liveFeedCarousels[id]);
-        }
-
-        function syncImageIndicatorTrack(el, id) {
-            const currentPosition = Math.round(el.scrollLeft / el.offsetWidth);
-            const indicators = document.querySelectorAll(`.track-dot-item-${id}`);
-            indicators.forEach((dot, index) => {
-                if (index === currentPosition) {
-                    dot.className = `track-dot-item-${id} w-3.5 h-1 bg-motopistache rounded-full transition-all duration-300`;
-                } else {
-                    dot.className = `track-dot-item-${id} w-1.5 h-1 bg-white/20 rounded-full transition-all duration-300`;
-                }
-            });
-        }
-
         function renderShowroomGrid() {
             const mainStream = document.getElementById('cars-grid-feed');
             const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
-
-            Object.keys(liveFeedCarousels).forEach(key => clearInterval(liveFeedCarousels[key]));
             mainStream.innerHTML = '';
 
             let databaseSubset = state.vehicles;
             if (state.currentBrand !== 'Tous') databaseSubset = databaseSubset.filter(v => v.marque === state.currentBrand);
-            if (searchVal) {
-                databaseSubset = databaseSubset.filter(v => `${v.marque} ${v.modele} ${v.sbiha}`.toLowerCase().includes(searchVal));
-            }
+            if (searchVal) databaseSubset = databaseSubset.filter(v => `${v.marque} ${v.modele} ${v.sbiha}`.toLowerCase().includes(searchVal));
 
             databaseSubset.forEach(car => {
                 const sold = car.status === 'vendue';
-                const sbihaSafe = car.sbiha || "نقية";
-                const detailAccentClass = sbihaSafe.toLowerCase().includes('00') || sbihaSafe.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
-                
-                // 🔴 التعديل: إزالة السواد عن الدراجة المباعة
-                const soldFrameClass = sold ? 'border border-laserred/40 shadow-[0_0_15px_rgba(244,63,94,0.15)]' : 'border border-white/5';
+                const soldFrameClass = sold ? 'border border-laserred/40 shadow-[0_0_20px_rgba(244,63,94,0.15)]' : 'border border-white/5';
+                const imagesArray = car.images && car.images.length > 0 ? car.images : ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=85"];
 
                 mainStream.innerHTML += `
                 <div class="card-animate card-premium rounded-[28px] overflow-hidden relative bg-cardgray transition-transform active:scale-[0.98] ${soldFrameClass}">
                     ${sold ? `<div class="ribbon-sold-pro">${lexicons[state.lang].soldBadge}</div>` : ''}
 
-                    <div class="relative h-80 w-full" onmouseenter="freezeFeedCarouselScroller(${car.id})" onmouseleave="igniteFeedCarouselScroller(${car.id})">
-                        <div id="feed-image-track-${car.id}" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" dir="ltr" onscroll="syncImageIndicatorTrack(this, ${car.id})" onclick="openDetailSheet(${car.id})">
-                            ${car.images.map(img => `
-                                <div class="swipe-slide h-full w-full snap-center shrink-0 relative">
-                                    <img src="${img}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-                                </div>
-                            `).join('')}
-                        </div>
+                    <div class="relative h-80 w-full" onclick="openDetailSheet(${car.id})">
+                        <img src="${imagesArray[0]}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
 
                         <span class="absolute top-4 ${state.lang === 'ar' ? 'right-4' : 'left-4'} bg-white/10 backdrop-blur border border-white/20 text-white text-[10px] font-black px-3 py-1.5 rounded-lg z-30" dir="ltr">${car.annee}</span>
-                        
-                        <div class="absolute top-4 ${state.lang === 'ar' ? 'left-4' : 'right-4'} bg-black/60 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold z-30" dir="ltr">
-                            <i class="fa-solid fa-images text-motopistache mr-1"></i> ${car.images.length}
-                        </div>
 
-                        <div class="absolute bottom-6 w-full px-4 pointer-events-none text-right z-30">
+                        <div class="absolute bottom-6 w-full px-4 text-right z-30">
                             <div class="flex justify-between items-end mb-3">
                                 <span class="text-base font-black ${sold ? 'text-laserred' : 'text-motopistache'} drop-shadow-md" dir="ltr">${car.prix}</span>
                                 <div class="text-right flex flex-col items-end">
-                                    <span class="text-[9px] text-zinc-200 font-black uppercase block mb-0.5 drop-shadow-md" dir="ltr">${car.marque}</span>
-                                    <h2 class="text-xl font-black text-white leading-none drop-shadow-lg" dir="ltr">${car.modele}</h2>
+                                    <span class="text-[9px] text-zinc-200 font-black uppercase block mb-0.5" dir="ltr">${car.marque}</span>
+                                    <h2 class="text-xl font-black text-white leading-none">${car.modele}</h2>
                                 </div>
                             </div>
                             <div class="flex justify-end gap-2 text-[10px] font-bold">
-                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 truncate max-w-[150px] ${detailAccentClass} flex items-center gap-1.5 leading-none" dir="rtl"><i class="fa-solid fa-brush"></i> ${sbihaSafe}</span>
-                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 text-white flex items-center gap-1.5 leading-none" dir="ltr"><i class="fa-solid fa-gauge-high text-motopistache text-[9px]"></i> ${car.km}</span>
+                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 text-zinc-300" dir="rtl"><i class="fa-solid fa-brush"></i> ${car.sbiha || 'نقية'}</span>
+                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 text-white" dir="ltr"><i class="fa-solid fa-gauge-high text-motopistache text-[9px]"></i> ${car.km}</span>
                             </div>
                         </div>
-
-                        <div class="absolute bottom-3 w-full flex justify-center gap-1.5 pointer-events-none z-30" dir="ltr">
-                            ${car.images.map((_, i) => `<span class="track-dot-item-${car.id} h-1 rounded-full transition-all duration-300 ${i === 0 ? 'bg-motopistache w-4' : 'bg-white/20 w-1.5'}"></span>`).join('')}
-                        </div>
-                    </div>
-
-                    <div class="bg-cardgray border-t border-white/5 text-zinc-400 hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
-                        <span>${sold ? lexicons[state.lang].soldBadge : lexicons[state.lang].touchDetails}</span>
-                        <i class="fa-solid fa-chevron-up text-[9px] animate-bounce"></i>
                     </div>
                 </div>`;
-
-                setTimeout(() => igniteFeedCarouselScroller(car.id), 250);
             });
 
             renderBrandFilterTrack();
@@ -964,7 +776,6 @@
         function openDetailSheet(id) {
             const car = state.vehicles.find(v => v.id === id);
             if (!car) return;
-            state.activeViewingIndex = state.vehicles.indexOf(car);
 
             document.getElementById('modal-year-badge').innerText = car.annee;
             document.getElementById('modal-title').innerText = `${car.marque} ${car.modele}`;
@@ -974,51 +785,24 @@
             document.getElementById('spec-color').innerText = car.couleur;
             document.getElementById('paint-verdict').innerText = car.sbiha || "بدون ملاحظات";
 
-            const mappedZones = car.sbihaZones || { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false };
-            document.getElementById('svg-hood').setAttribute('fill', mappedZones.hood ? '#f43f5e' : '#15151f');
-            document.getElementById('svg-front-door').setAttribute('fill', mappedZones.frontDoor ? '#f43f5e' : '#15151f');
-            document.getElementById('svg-back-door').setAttribute('fill', mappedZones.backDoor ? '#f43f5e' : '#15151f');
-            document.getElementById('svg-back-wing').setAttribute('fill', mappedZones.backWing ? '#f43f5e' : '#15151f');
-
-            const targetNegotiatePitch = state.lang === 'fr' 
-                ? `Salam Moto sud+, je souhaite obtenir des informations concernant la moto ${car.marque} ${car.modele} (${car.annee}) affichée à ${car.prix}.`
-                : `السلام عليكم Moto sud+، راني مهتم بالدراجة ${car.marque} ${car.modele} (${car.annee}) المعروضة بسعر ${car.prix}. حاب تفاصيل أكثر من فضلك.`;
-            document.getElementById('modal-whatsapp-btn').href = `https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(targetNegotiatePitch)}`;
+            const msg = state.lang === 'fr' 
+                ? `Salam, je souhaite obtenir des infos sur ${car.marque} ${car.modele} (${car.annee}) affichée à ${car.prix}.`
+                : `السلام عليكم، مهتم بالدراجة ${car.marque} ${car.modele} (${car.annee}) المعروضة بسعر ${car.prix}.`;
+            document.getElementById('modal-whatsapp-btn').href = `https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(msg)}`;
 
             const galleryTrack = document.getElementById('modal-image-swiper');
             galleryTrack.innerHTML = '';
-            car.images.forEach(img => {
+            const imagesArray = car.images && car.images.length > 0 ? car.images : ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=85"];
+            imagesArray.forEach(img => {
                 galleryTrack.innerHTML += `<div class="swipe-slide h-full w-full snap-center shrink-0 flex items-center justify-center bg-black"><img src="${img}" class="w-full h-full object-cover"></div>`;
             });
 
-            document.getElementById('gallery-indicator-counter').innerText = `1 / ${car.images.length}`;
-            galleryTrack.scrollLeft = 0;
-            switchDetailsTabPane('specs');
-
             document.getElementById('detailSheetModal').classList.remove('hidden');
-            setTimeout(() => { document.getElementById('detailSheetContainer').classList.add('active'); }, 10);
         }
 
-        function closeDetailSheet() {
-            document.getElementById('detailSheetContainer').classList.remove('active');
-            setTimeout(() => { document.getElementById('detailSheetModal').classList.add('hidden'); }, 400);
-        }
-
-        function syncSwiperImageCounter() {
-            const swiper = document.getElementById('modal-image-swiper');
-            const calculatedIndex = Math.round(swiper.scrollLeft / swiper.offsetWidth) + 1;
-            const size = swiper.children.length;
-            document.getElementById('gallery-indicator-counter').innerText = `${calculatedIndex} / ${size}`;
-        }
-
-        function switchDetailsTabPane(tab) {
-            document.querySelectorAll('.tab-btn').forEach(button => button.className = "tab-btn flex-1 py-4 border-b-2 border-transparent text-zinc-500 transition");
-            document.getElementById(`tab-${tab}`).className = "tab-btn flex-1 py-4 border-b-2 border-motopistache text-motopistache transition shadow-[0_4px_15px_-5px_rgba(161,232,39,0.2)] font-black";
-
-            document.getElementById('pane-specs').classList.add('hidden');
-            document.getElementById('pane-paint').classList.add('hidden');
-            document.getElementById(`pane-${tab}`).classList.remove('hidden');
-        }
+        function closeDetailSheet() { document.getElementById('detailSheetModal').classList.add('hidden'); }
+        function openRepriseModal() { document.getElementById('repriseSheetModal').classList.remove('hidden'); }
+        function closeRepriseModal() { document.getElementById('repriseSheetModal').classList.add('hidden'); }
 
         function buildRepriseTargetDropdown() {
             const dropdown = document.getElementById('rep-car-target');
@@ -1028,32 +812,20 @@
             });
         }
 
-        function openRepriseModal() {
-            document.getElementById('repriseSheetModal').classList.remove('hidden');
-            setTimeout(() => { document.getElementById('repriseSheetContainer').classList.add('active'); }, 10);
-        }
-
-        function closeRepriseModal() {
-            document.getElementById('repriseSheetContainer').classList.remove('active');
-            setTimeout(() => { document.getElementById('repriseSheetModal').classList.add('hidden'); }, 300);
-        }
-
         function sendReprisePayload() {
             const name = document.getElementById('rep-car-name').value;
             const year = document.getElementById('rep-car-year').value;
             const km = document.getElementById('rep-car-km').value;
-            const paint = document.getElementById('rep-car-paint').value;
             const target = document.getElementById('rep-car-target').value;
 
             if (!name || !year || !km) { triggerToastNotification(lexicons[state.lang].errorFields); return; }
 
-            const structuredExchangeMsg = state.lang === 'fr' 
-                ? `Salam Moto sud+, je propose un échange (Reprise):\n\n✦ Ma Moto : ${name} (${year})\n✦ KM : ${km}\n✦ État : ${paint || 'Parfait'}\n\n🔄 Contre : ${target}`
-                : `السلام عليكم Moto sud+، حاب ندير تبديل (Reprise):\n\n✦ دراجتي: ${name} (${year})\n✦ العداد: ${km}\n✦ الحالة: ${paint || 'صافية'}\n\n🔄 الدراجة المطلوبة من المعرض: ${target}`;
+            const msg = state.lang === 'fr' 
+                ? `Salam, je propose un échange:\nMa Moto : ${name} (${year})\nKM : ${km}\nContre : ${target}`
+                : `السلام عليكم، حاب ندير تبديل:\nدراجتي: ${name} (${year})\nالعداد: ${km}\nالدراجة المطلوبة: ${target}`;
                 
-            window.open(`https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(structuredExchangeMsg)}`, '_blank');
+            window.open(`https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(msg)}`, '_blank');
             closeRepriseModal();
-            triggerToastNotification(lexicons[state.lang].successToast);
         }
 
         function renderAdminStockList() {
@@ -1062,10 +834,11 @@
 
             state.vehicles.forEach(car => {
                 const disponible = car.status === 'disponible';
+                const firstImg = car.images && car.images.length > 0 ? car.images[0] : '';
                 container.innerHTML += `
                 <div class="bg-neutral-950 border border-white/5 p-3 rounded-xl flex items-center justify-between gap-3 shadow-md" dir="ltr">
                     <div class="flex items-center gap-2.5 min-w-0">
-                        <img src="${car.images[0]}" class="w-10 h-10 object-cover rounded-lg border border-white/5">
+                        <img src="${firstImg}" class="w-10 h-10 object-cover rounded-lg border border-white/5">
                         <div class="min-w-0 text-left">
                             <p class="text-[10px] font-black text-white truncate">${car.marque} ${car.modele}</p>
                             <p class="text-[9px] text-motopistache font-black mt-0.5">${car.prix}</p>
@@ -1078,7 +851,6 @@
                                 <div class="toggle-switch-dot absolute top-[1px] right-[1px] bg-red-500 w-[16px] h-[16px] rounded-full transition-transform"></div>
                             </div>
                         </label>
-                        
                         <button onclick="removeInventoryItem(${car.id})" class="text-zinc-500 hover:text-red-500 text-xs p-1 ml-1"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </div>`;
