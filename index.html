@@ -17,7 +17,6 @@
                         cardgray: '#0a0a0f',
                         glassdark: 'rgba(10, 10, 15, 0.75)',
                         laserred: '#f43f5e',
-                        /* Loun vert pistache kima dlabt */
                         motopistache: '#A1E827', 
                         motoglow: '#C2FF4D',
                         whitepure: '#FFFFFF'
@@ -69,7 +68,7 @@
             background: #010103;
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 100px rgba(161, 232, 39, 0.05); /* Pistache shadow */
+            box-shadow: 0 0 100px rgba(161, 232, 39, 0.05);
             border-left: 1px solid rgba(255, 255, 255, 0.02);
             border-right: 1px solid rgba(255, 255, 255, 0.02);
         }
@@ -81,7 +80,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* TEXTE AVEC LIGHT ET GLOW ANIMATION */
         .brand-glow-text {
             color: #A1E827;
             text-shadow: 0 0 10px rgba(161, 232, 39, 0.5), 0 0 20px rgba(161, 232, 39, 0.3);
@@ -94,10 +92,6 @@
         }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-
-        .premium-card-shadow {
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0,0,0,0.4);
-        }
 
         .sold-ribbon {
             position: absolute;
@@ -116,7 +110,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Animation mbahra ll bouton ta3 l'admin */
         .secret-trigger-area {
             position: relative;
             cursor: pointer;
@@ -132,13 +125,12 @@
             transform-origin: 50% 50%;
         }
 
-        /* Switch on/off style */
         .toggle-switch-input:checked + .toggle-switch-label {
             background-color: rgba(16, 185, 129, 0.2);
             border-color: rgba(16, 185, 129, 0.5);
         }
         .toggle-switch-input:checked + .toggle-switch-label .toggle-switch-dot {
-            transform: translateX(-100%); /* RTL fix */
+            transform: translateX(-100%); 
             background-color: #10b981;
         }
     </style>
@@ -165,7 +157,6 @@
                 <span id="label-showroom" class="text-[9px] font-black tracking-widest text-whitepure uppercase font-sans">El Oued, Algérie</span>
             </a>
             
-            <!-- الزر السري لدخول الإدارة -->
             <div id="secretAdminTrigger" class="secret-trigger-area flex items-center justify-center p-2 rounded-full h-16 relative">
                 <svg class="absolute inset-0 w-full h-full opacity-0 scale-[1.3] transition-opacity duration-300 pointer-events-none" id="holdProgressSvg" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(161, 232, 39, 0.2)" stroke-width="4"></circle>
@@ -183,7 +174,7 @@
             </button>
         </header>
 
-        <!-- ================= BIOMETRIC SECRET SCREEN (PIN VERIFICATION) ================= -->
+        <!-- ================= BIOMETRIC SECRET SCREEN ================= -->
         <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center hidden">
             <div class="w-80 p-6 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)]">
                 <div class="flex flex-col items-center gap-3">
@@ -198,7 +189,7 @@
             </div>
         </div>
 
-        <!-- ================= OWNER ADVANCED COMMAND CENTER (ADMIN COCKPIT) ================= -->
+        <!-- ================= ADMIN COCKPIT ================= -->
         <section id="ownerCommandCenter" class="hidden mx-4 mt-4 p-5 bg-cardgray rounded-3xl border border-motopistache/20 space-y-6 shadow-[0_0_30px_rgba(161,232,39,0.08)] animate-fade-in relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-motopistache/20 rounded-full blur-2xl pointer-events-none"></div>
 
@@ -215,7 +206,6 @@
                 </button>
             </div>
 
-            <!-- إحصائيات النظام -->
             <div class="grid grid-cols-2 gap-3 relative z-10">
                 <div class="bg-black p-4 rounded-2xl border border-white/5 shadow-inner">
                     <div class="flex justify-between items-center mb-1">
@@ -233,7 +223,6 @@
                 </div>
             </div>
 
-            <!-- إضافة دراجة جديدة -->
             <form id="ownerCarForm" onsubmit="processNewLuxuryCar(event)" class="space-y-5 relative z-10 bg-black/40 p-5 rounded-2xl border border-white/5">
                 <div class="flex items-center gap-2 mb-2">
                     <span class="w-1.5 h-4 bg-motopistache rounded-full"></span>
@@ -277,7 +266,6 @@
                     </div>
                 </div>
 
-                <!-- فحص الهيكل / كاريناج (Motos) -->
                 <div class="bg-cardgray border border-white/5 p-4 rounded-xl space-y-3 shadow-inner">
                     <span class="text-[10px] font-black text-motopistache block">حالة الهيكل / كاريناج الدراجة</span>
                     <p class="text-[9px] text-zinc-500 font-bold">حدد الأجزاء التي تحتوي على رتوشات أو عيوب:</p>
@@ -290,7 +278,6 @@
                     <input type="text" id="addPaintVerdict" placeholder="وصف حالة الهيكل (مثال: نقية 100%...)" required class="w-full bg-black rounded-lg p-3 text-xs text-white border border-white/5 focus:border-motopistache transition-all">
                 </div>
 
-                <!-- رفع الصور -->
                 <div class="relative w-full bg-cardgray border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center gap-3 hover:border-motopistache transition-all group">
                     <input type="file" id="imageInputLoader" accept="image/*" multiple required class="absolute inset-0 opacity-0 cursor-pointer z-10">
                     <div class="w-12 h-12 rounded-full bg-motopistache/10 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -304,7 +291,6 @@
                 </button>
             </form>
 
-            <!-- تسيير المخزون بـ Switch -->
             <div class="pt-2 space-y-3 relative z-10">
                 <div class="flex items-center gap-2 mb-4">
                     <span class="w-1.5 h-4 bg-zinc-500 rounded-full"></span>
@@ -322,14 +308,11 @@
             </div>
             
             <div class="flex overflow-x-auto gap-2 py-1 hide-scrollbar" id="brand-scroller-track" dir="ltr">
-                <!-- Filled dynamically -->
             </div>
         </div>
 
         <!-- SHOWROOM LIVE MOTO STACKS -->
-        <main class="p-4 space-y-5" id="cars-grid-feed">
-            <!-- Dynamic interactive cards load here -->
-        </main>
+        <main class="p-4 space-y-5" id="cars-grid-feed"></main>
 
         <!-- LUXURY SOCIAL CONNECTIONS & GPS ROUTING -->
         <div class="p-6 border-t border-white/5 bg-neutral-950/40 text-center space-y-6 mt-12 mb-12">
@@ -339,7 +322,6 @@
             </div>
             
             <div class="flex justify-center gap-4" dir="ltr">
-                <!-- LIENS TA3 MOTOSUD+ -->
                 <a href="https://www.tiktok.com/@motosudplus1?_r=1&_t=ZS-98375MNbxaR" target="_blank" class="w-12 h-12 bg-cardgray rounded-2xl border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-black active:scale-95 transition-all duration-300 shadow-md group">
                     <i class="fa-brands fa-tiktok text-xl group-hover:scale-110 transition-transform"></i>
                 </a>
@@ -381,32 +363,29 @@
 
             <div class="flex-1 overflow-y-auto pb-28 hide-scrollbar">
                 
-                <!-- Gallery Swipe View -->
                 <div class="relative h-80 bg-black" dir="ltr">
                     <div id="modal-image-swiper" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" onscroll="syncSwiperImageCounter()">
                     </div>
                     <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-metalic to-transparent pointer-events-none"></div>
                     <div class="absolute bottom-4 left-4 z-10">
-                        <span id="modal-year-badge" class="bg-motopistache text-black text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(161,232,39,0.4)]">2024</span>
-                        <h2 id="modal-title" class="text-2xl font-black text-white mt-1 leading-none tracking-tight">MOTO</h2>
+                        <span id="modal-year-badge" class="bg-motopistache text-black text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(161,232,39,0.4)]"></span>
+                        <h2 id="modal-title" class="text-2xl font-black text-white mt-1 leading-none tracking-tight"></h2>
                     </div>
                     <div class="absolute bottom-4 right-4 bg-black/50 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold">
-                        <i class="fa-solid fa-images text-motopistache mr-1"></i> <span id="gallery-indicator-counter">1 / 1</span>
+                        <i class="fa-solid fa-images text-motopistache mr-1"></i> <span id="gallery-indicator-counter"></span>
                     </div>
                 </div>
 
                 <div class="p-5 flex justify-between items-center bg-cardgray border-b border-white/5">
                     <span class="text-zinc-400 text-xs font-bold" id="label-price-requested">السعر المطلوب</span>
-                    <span id="modal-price" class="text-lg font-black text-white bg-motopistache/10 border border-motopistache/30 px-4 py-2 rounded-xl text-shadow-sm" dir="ltr">00 DA</span>
+                    <span id="modal-price" class="text-lg font-black text-white bg-motopistache/10 border border-motopistache/30 px-4 py-2 rounded-xl text-shadow-sm" dir="ltr"></span>
                 </div>
 
-                <!-- Information Tabs -->
                 <div class="flex border-b border-white/5 bg-cardgray text-center text-[11px] font-black">
                     <button onclick="switchDetailsTabPane('specs')" id="tab-specs" class="tab-btn flex-1 py-4 border-b-2 border-motopistache text-motopistache transition shadow-[0_4px_15px_-5px_rgba(161,232,39,0.2)]">التفاصيل الفنية</button>
                     <button onclick="switchDetailsTabPane('paint')" id="tab-paint" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-zinc-500 transition">حالة الهيكل</button>
                 </div>
 
-                <!-- Tab Specs Content -->
                 <div id="pane-specs" class="p-4 space-y-3" dir="ltr">
                     <div class="grid grid-cols-2 gap-3 text-xs">
                         <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-end gap-3 text-right">
@@ -433,7 +412,6 @@
                     </div>
                 </div>
 
-                <!-- Tab Paint Interactive SVG Diagram (MOTO Version) -->
                 <div id="pane-paint" class="p-4 space-y-3 hidden">
                     <div class="bg-cardgray border border-white/5 rounded-3xl p-5 shadow-xl">
                         <div class="flex justify-between items-center mb-4">
@@ -441,31 +419,17 @@
                             <span class="bg-laserred/10 border border-laserred/20 text-laserred text-[9px] font-black px-3 py-1 rounded" id="badge-paint-label">ملاحظات</span>
                         </div>
                         
-                        <!-- MOTO SVG Abstract Scanner -->
                         <div class="flex justify-center py-5 bg-[#050508] rounded-2xl border border-white/5 mb-5 shadow-inner">
                             <svg class="w-56 h-auto" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Wheels -->
                                 <circle cx="90" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
                                 <circle cx="90" cy="140" r="15" fill="#52525b"/>
                                 <circle cx="310" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
                                 <circle cx="310" cy="140" r="15" fill="#52525b"/>
-                                
-                                <!-- Frame/Engine base -->
                                 <path d="M120 140 L160 80 L240 80 L280 140 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2"/>
-                                
-                                <!-- Tank (p_hood/Reservoir) -->
                                 <path id="svg-hood" d="M160 80 C180 40, 240 40, 250 80 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Front Fairing (p_fdoor) -->
                                 <path id="svg-front-door" d="M250 80 L280 40 L310 90 L260 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Side Fairing (p_bdoor) -->
                                 <path id="svg-back-door" d="M180 80 L250 80 L230 130 L160 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Tail (p_bwing) -->
                                 <path id="svg-back-wing" d="M160 80 L80 60 L60 80 L120 100 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Front Fork -->
                                 <line x1="280" y1="40" x2="310" y2="140" stroke="#52525b" stroke-width="6"/>
                             </svg>
                         </div>
@@ -477,16 +441,13 @@
                         <p id="paint-verdict" class="text-xs font-bold text-white bg-cardgray border border-white/5 p-4 rounded-xl leading-relaxed border-r-4 border-r-motopistache">-</p>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Modal Action WhatsApp Contact CTA -->
             <div class="absolute bottom-0 w-full p-4 bg-cardgray/95 backdrop-blur-md border-t border-white/5 pb-6 flex z-50">
                 <a id="modal-whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-4 rounded-2xl flex items-center justify-center active:scale-95 transition-all text-sm shadow-lg shadow-green-600/20">
                     <i class="fa-brands fa-whatsapp text-xl ml-2"></i> <span id="label-contact-seller">تواصل مع البائع للتفاوض</span>
                 </a>
             </div>
-
         </div>
     </div>
 
@@ -544,7 +505,6 @@
     <script>
         const WHATSAPP_CONTACT_HOTLINE = "213664925785";
 
-        // قاعدة بيانات ديمو خاصة بالدراجات النارية (Motos)
         const demoWarehouseVehicles = [
             {
                 id: 1, marque: "YAMAHA", modele: "TMAX 560 Tech Max", annee: "2023", prix: "420M", km: "8 000 km", moteur: "560cc", boite: "AUTOMATIQUE", couleur: "Dark Petrol",
@@ -612,7 +572,6 @@
             applyLanguage();
         });
 
-        // ================= INTUITIVE HOLD ANIMATION =================
         function setupIntelligentHoldAnimation() {
             const trigger = document.getElementById('secretAdminTrigger');
             const svg = document.getElementById('holdProgressSvg');
@@ -636,9 +595,7 @@
                 }, 3000);
             };
 
-            const abortHold = () => {
-                resetHold();
-            };
+            const abortHold = () => { resetHold(); };
 
             const resetHold = () => {
                 if (holdTimer) clearTimeout(holdTimer);
@@ -650,7 +607,6 @@
                 bar.style.strokeDashoffset = '283'; 
             };
 
-            // Touch & Mouse
             trigger.addEventListener('touchstart', startHold, {passive: false});
             trigger.addEventListener('touchend', abortHold);
             trigger.addEventListener('touchcancel', abortHold);
@@ -708,14 +664,12 @@
             let accumulatedValue = 0;
             state.vehicles.forEach(car => {
                 const cleanValue = parseFloat(car.prix.replace(/[^0-9.]/g, ''));
-                if (!isNaN(cleanValue)) {
-                    accumulatedValue += cleanValue;
-                }
+                if (!isNaN(cleanValue)) { accumulatedValue += cleanValue; }
             });
             document.getElementById('analyticsTotalValue').innerText = accumulatedValue.toFixed(0) + " M";
         }
 
-        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE =================
+        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE (IMPROVED FOR MEMORY) =================
         function setupHiresOnTheFlyImageCompressor() {
             document.getElementById('imageInputLoader').addEventListener('change', function(e) {
                 const files = e.target.files;
@@ -733,27 +687,23 @@
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 
-                                const limitDim = 800;
+                                // تم تصغير الحجم لتفادي إمتلاء الذاكرة بسرعة
+                                const limitDim = 600; 
                                 let w = img.width;
                                 let h = img.height;
                                 
                                 if (w > h) {
-                                    if (w > limitDim) {
-                                        h *= limitDim / w;
-                                        w = limitDim;
-                                    }
+                                    if (w > limitDim) { h *= limitDim / w; w = limitDim; }
                                 } else {
-                                    if (h > limitDim) {
-                                        w *= limitDim / h;
-                                        h = limitDim;
-                                    }
+                                    if (h > limitDim) { w *= limitDim / h; h = limitDim; }
                                 }
 
                                 canvas.width = w;
                                 canvas.height = h;
                                 ctx.drawImage(img, 0, 0, w, h);
                                 
-                                const base64Webp = canvas.toDataURL('image/jpeg', 0.65);
+                                // تم تقليل الجودة قليلاً (0.5 بدلا من 0.65) للحفاظ على LocalStorage
+                                const base64Webp = canvas.toDataURL('image/jpeg', 0.5);
                                 state.temporaryImages64.push(base64Webp);
                                 resolved++;
 
@@ -802,7 +752,13 @@
             state.temporaryImages64 = [];
             document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-500'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
             
-            triggerToastNotification("تمت إضافة الدراجة الجديدة للمعرض.");
+            // Notification مخصصة كما طلبت
+            triggerToastNotification("CBN RAHI TAL3AT F CATALOGUE 🏍️🔥");
+            
+            // النزول التلقائي للكتالوج لرؤية الدراجة مباشرة
+            setTimeout(() => {
+                document.getElementById('cars-grid-feed').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         }
 
         function removeInventoryItem(id) {
@@ -815,16 +771,22 @@
 
         function toggleInventoryStatus(id) {
             state.vehicles = state.vehicles.map(v => {
-                if (v.id === id) {
-                    v.status = v.status === 'disponible' ? 'vendue' : 'disponible';
-                }
+                if (v.id === id) { v.status = v.status === 'disponible' ? 'vendue' : 'disponible'; }
                 return v;
             });
             syncStateToLocalStorage();
         }
 
+        // ================== FIXED LOCALSTORAGE CACHE SYSTEM ==================
         function syncStateToLocalStorage() {
-            localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
+            try {
+                localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
+            } catch (error) {
+                console.error("الذاكرة ممتلئة LocalStorage القصور: ", error);
+                // الدراجة ستظهر في الموقع للزوار حالياً حتى لو لم يتم الحفظ بالهاتف!
+            }
+            
+            // هذه الأسطر مهمة جداً لظهور الدراجة (يجب أن تكون خارج Try Catch)
             renderShowroomGrid();
             renderAdminStockList();
             buildRepriseTargetDropdown();
@@ -910,9 +872,7 @@
             liveFeedCarousels[id] = setInterval(() => {
                 const size = viewport.offsetWidth;
                 let targetLocation = viewport.scrollLeft + size;
-                if (targetLocation >= viewport.scrollWidth - 10) {
-                    targetLocation = 0;
-                }
+                if (targetLocation >= viewport.scrollWidth - 10) { targetLocation = 0; }
                 viewport.scrollTo({ left: targetLocation, behavior: 'smooth' });
             }, 3500);
         }
@@ -948,7 +908,9 @@
 
             databaseSubset.forEach(car => {
                 const sold = car.status === 'vendue';
-                const detailAccentClass = car.sbiha.toLowerCase().includes('00') || car.sbiha.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
+                // حماية من الأخطاء في حالة كان sbiha فارغاً
+                const sbihaSafe = car.sbiha || "";
+                const detailAccentClass = sbihaSafe.toLowerCase().includes('00') || sbihaSafe.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
 
                 mainStream.innerHTML += `
                 <div class="card-animate card-premium rounded-[28px] overflow-hidden relative ${sold ? 'grayscale brightness-[45%] border border-zinc-900' : 'border border-white/5'}">
@@ -978,7 +940,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-end gap-2 text-[10px] font-bold">
-                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 truncate max-w-[150px] ${detailAccentClass} flex items-center gap-1.5 leading-none" dir="rtl"><i class="fa-solid fa-brush"></i> ${car.sbiha}</span>
+                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 truncate max-w-[150px] ${detailAccentClass} flex items-center gap-1.5 leading-none" dir="rtl"><i class="fa-solid fa-brush"></i> ${sbihaSafe}</span>
                                 <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 text-white flex items-center gap-1.5 leading-none" dir="ltr"><i class="fa-solid fa-gauge-high text-motopistache text-[9px]"></i> ${car.km}</span>
                             </div>
                         </div>
@@ -1011,7 +973,7 @@
             document.getElementById('spec-km').innerText = car.km;
             document.getElementById('spec-engine').innerText = car.moteur;
             document.getElementById('spec-color').innerText = car.couleur;
-            document.getElementById('paint-verdict').innerText = car.sbiha;
+            document.getElementById('paint-verdict').innerText = car.sbiha || "بدون ملاحظات";
 
             const mappedZones = car.sbihaZones || { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false };
             document.getElementById('svg-hood').setAttribute('fill', mappedZones.hood ? '#f43f5e' : '#15151f');
@@ -1102,7 +1064,6 @@
             window.open(`https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(genericMsg)}`, '_blank');
         }
 
-        // ================= OWNER SAAS PANEL (STOCK MANAGER RENDERER WITH SWITCH) =================
         function renderAdminStockList() {
             const container = document.getElementById('adminStockList');
             container.innerHTML = '';
@@ -1119,7 +1080,6 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <!-- Toggle Switch Dispo / Vendu -->
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" class="sr-only toggle-switch-input" onchange="toggleInventoryStatus(${car.id})" ${disponible ? 'checked' : ''}>
                             <div class="toggle-switch-label w-10 h-5 bg-red-500/20 rounded-full border border-red-500/50 transition-colors relative">
