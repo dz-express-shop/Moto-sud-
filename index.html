@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth select-none">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Moto sud+ | دراجات الجنوب +</title>
     
     <!-- TailWind CSS & Premium Fonts -->
@@ -53,6 +53,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- STREAMING_CHUNK:Styling Base Setup -->
     <style>
         body {
             background-color: #010103;
@@ -60,6 +61,7 @@
             font-family: 'Alexandria', 'Outfit', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .mobile-container {
@@ -93,37 +95,24 @@
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
 
-        .sold-ribbon {
-            position: absolute;
-            top: 20px;
-            left: -32px; 
-            transform: rotate(-45deg);
-            width: 125px;
-            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
-            color: white;
-            text-align: center;
-            font-weight: 900;
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-            z-index: 10;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Premium Sold Ribbon completely redesigned (NO Grayscale needed) */
+        .ribbon-sold-pro {
+            position: absolute; 
+            top: 25px; 
+            background: linear-gradient(90deg, #f43f5e, #991b1b);
+            color: white; 
+            padding: 6px 40px; 
+            font-size: 0.75rem; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(244, 63, 94, 0.6); 
+            z-index: 40; 
+            border-top: 1px solid rgba(255,255,255,0.4); 
+            border-bottom: 1px solid rgba(255,255,255,0.4);
         }
-
-        .secret-trigger-area {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .secret-trigger-area.holding {
-            transform: scale(1.10);
-        }
-        
-        .progress-ring__circle {
-            transition: stroke-dashoffset 3s linear;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
+        html[dir="rtl"] .ribbon-sold-pro { left: -35px; transform: rotate(-45deg); }
+        html[dir="ltr"] .ribbon-sold-pro { right: -35px; transform: rotate(45deg); }
 
         .toggle-switch-input:checked + .toggle-switch-label {
             background-color: rgba(16, 185, 129, 0.2);
@@ -137,6 +126,7 @@
 </head>
 <body class="antialiased">
 
+    <!-- STREAMING_CHUNK:Building App Structure & Header -->
     <div class="mobile-container pb-28">
         
         <!-- Live Marquee -->
@@ -157,12 +147,8 @@
                 <span id="label-showroom" class="text-[9px] font-black tracking-widest text-whitepure uppercase font-sans">El Oued, Algérie</span>
             </a>
             
-            <div id="secretAdminTrigger" class="secret-trigger-area flex items-center justify-center p-2 rounded-full h-16 relative">
-                <svg class="absolute inset-0 w-full h-full opacity-0 scale-[1.3] transition-opacity duration-300 pointer-events-none" id="holdProgressSvg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(161, 232, 39, 0.2)" stroke-width="4"></circle>
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#A1E827" stroke-width="4" stroke-dasharray="283" stroke-dashoffset="283" class="progress-ring__circle" id="holdProgressBar"></circle>
-                </svg>
-                
+            <!-- Logo Section -->
+            <div class="flex items-center justify-center p-2 rounded-full h-16 relative">
                 <div class="flex flex-col items-center justify-center relative z-10 leading-none">
                     <h1 class="text-lg font-black tracking-tighter uppercase brand-glow-text font-sans" dir="ltr">Moto sud+</h1>
                     <h2 class="text-[10px] font-bold text-white tracking-widest mt-0.5">دراجات الجنوب +</h2>
@@ -174,21 +160,25 @@
             </button>
         </header>
 
+        <!-- STREAMING_CHUNK:Admin Auth Pin Code -->
         <!-- ================= BIOMETRIC SECRET SCREEN ================= -->
-        <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center hidden">
-            <div class="w-80 p-6 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)]">
+        <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="w-80 p-8 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)] relative transform scale-95 transition-transform duration-300" id="pinBox">
+                <button onclick="closeBiometricPinOverlay()" class="absolute top-4 left-4 text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="flex flex-col items-center gap-3">
-                    <i class="fa-solid fa-motorcycle text-motopistache text-5xl animate-pulse-pistache"></i>
-                    <h3 class="text-sm font-black text-white uppercase tracking-wider">نظام إدارة المعرض</h3>
+                    <div class="w-16 h-16 rounded-full bg-motopistache/10 flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-motopistache text-3xl animate-pulse-pistache"></i>
+                    </div>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider" id="lbl-auth-title">نظام إدارة المعرض</h3>
                     <p class="text-[10px] text-zinc-400 font-bold">يرجى إدخال الرمز السري الخاص بالمالك</p>
                 </div>
                 <div class="flex justify-center gap-2">
-                    <input type="password" maxlength="4" id="pinInput" class="w-40 bg-black border border-white/10 rounded-xl p-3 text-center text-xl tracking-[1.5em] font-black text-motopistache focus:outline-none focus:border-motopistache focus:shadow-[0_0_15px_rgba(161,232,39,0.3)] transition-all" oninput="handlePinSubmission()" dir="ltr">
+                    <input type="password" maxlength="4" id="pinInput" class="w-48 mx-auto bg-black border border-white/10 rounded-2xl p-4 text-center text-2xl tracking-[1em] font-black text-motopistache focus:outline-none focus:border-motopistache block transition-all" oninput="handlePinSubmission()" dir="ltr">
                 </div>
-                <button onclick="closeBiometricPinOverlay()" class="text-xs font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition">إلغاء العملية</button>
             </div>
         </div>
 
+        <!-- STREAMING_CHUNK:Admin Panel UI -->
         <!-- ================= ADMIN COCKPIT ================= -->
         <section id="ownerCommandCenter" class="hidden mx-4 mt-4 p-5 bg-cardgray rounded-3xl border border-motopistache/20 space-y-6 shadow-[0_0_30px_rgba(161,232,39,0.08)] animate-fade-in relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-motopistache/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -300,6 +290,7 @@
             </div>
         </section>
 
+        <!-- STREAMING_CHUNK:Filtering and Listing UI -->
         <!-- SEARCH FILTERS -->
         <div class="px-4 pt-4 space-y-3">
             <div class="relative">
@@ -336,6 +327,7 @@
             </div>
         </div>
 
+        <!-- STREAMING_CHUNK:Bottom Navbar -->
         <!-- PREMIUM NAVIGATION BAR -->
         <nav class="premium-blur-header fixed bottom-0 w-full max-w-[440px] flex justify-around items-center pt-3.5 pb-6 z-40">
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-motopistache transition-all hover:scale-105">
@@ -346,20 +338,27 @@
                 <i class="fa-solid fa-right-left text-lg mb-1"></i>
                 <span id="nav-reprise" class="text-[9px] font-black tracking-widest">مبادلة</span>
             </button>
-            <a id="nav-whatsapp-link" href="#" onclick="openWhatsappNav()" class="flex flex-col items-center text-zinc-500 active:text-green-500 transition-all hover:scale-105">
-                <i class="fa-brands fa-whatsapp text-xl mb-1"></i>
-                <span id="nav-contact" class="text-[9px] font-black tracking-widest">اتصل بنا</span>
-            </a>
+            <!-- الزر الجديد للإدارة بدلاً من اتصل بنا -->
+            <button onclick="openBiometricPinOverlay()" class="flex flex-col items-center text-zinc-500 active:text-motopistache transition-all hover:scale-105">
+                <i class="fa-solid fa-shield-halved text-xl mb-1"></i>
+                <span id="nav-admin" class="text-[9px] font-black tracking-widest">الإدارة</span>
+            </button>
         </nav>
 
     </div>
 
+    <!-- STREAMING_CHUNK:Details Modal (With Fixed Close Button) -->
     <!-- ================= PREMIUM DETAILS BOTTOM SHEET ================= -->
-    <div id="detailSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
+    <div id="detailSheetModal" class="fixed inset-0 z-[500] hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeDetailSheet()"></div>
+        
+        <!-- الزر الثابت للإغلاق (مستقل تماماً عن المحتوى) -->
+        <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-3xl border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
         <div class="relative w-full max-w-[440px] mx-auto h-[95vh] bg-metalic border-t border-motopistache/30 rounded-t-[32px] flex flex-col transition-transform duration-500 shadow-[0_-10px_40px_rgba(161,232,39,0.1)]" id="detailSheetContainer">
             <div class="w-12 h-1.5 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
-            <button onclick="closeDetailSheet()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-motopistache hover:text-black active:scale-90 transition border border-white/5 z-50"><i class="fa-solid fa-xmark"></i></button>
 
             <div class="flex-1 overflow-y-auto pb-28 hide-scrollbar">
                 
@@ -451,6 +450,7 @@
         </div>
     </div>
 
+    <!-- STREAMING_CHUNK:Reprise Modal UI -->
     <!-- ================= TRADE-IN EXCHANGE SHEET (REPRISE SYSTEM) ================= -->
     <div id="repriseSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
@@ -494,13 +494,14 @@
     </div>
 
     <!-- HIERARCHICAL NOTIFICATION INTERACTION (TOAST) -->
-    <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-24 opacity-0 transition-all duration-500">
+    <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] transform -translate-y-24 opacity-0 transition-all duration-500">
         <div class="bg-cardgray border border-motopistache/30 text-white px-5 py-3.5 rounded-full shadow-[0_5px_30px_rgba(161,232,39,0.3)] flex items-center gap-3">
             <i class="fa-solid fa-circle-check text-motopistache text-lg"></i>
             <span id="toast-txt" class="font-bold text-xs">تمت العملية بنجاح</span>
         </div>
     </div>
 
+    <!-- STREAMING_CHUNK:Javascript Application Engine -->
     <!-- ================= MASTER ENGINE CONTROLLER JAVASCRIPT ================= -->
     <script>
         const WHATSAPP_CONTACT_HOTLINE = "213664925785";
@@ -546,9 +547,10 @@
                 repriseDesc: "Proposez votre moto actuelle. Notre équipe évaluera la différence de prix.", yourCar: "Votre Moto",
                 year: "Année", km: "KM", paint: "État Carénage", target: "Moto souhaitée", sendProposal: "Envoyer l'offre",
                 successToast: "Opération traitée avec succès !", errorFields: "Champs obligatoires !", discover: "Catalogue",
-                reprise: "Échange", contact: "Contact", paintedZone: "Zone touchée / Rayure", cleanZone: "Zone intacte",
+                reprise: "Échange", admin: "Administration", paintedZone: "Zone touchée / Rayure", cleanZone: "Zone intacte",
                 touchDetails: "Détails Uniquement", price: "Prix demandé", engine: "Moteur", color: "Couleur",
-                contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDU", totalBikes: "Total Motos"
+                contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDUE", totalBikes: "Total Motos",
+                addedSuccess: "Moto ajoutée au catalogue avec succès 🏍️🔥"
             },
             ar: {
                 showroom: "الوادي، الجزائر", searchPlaceholder: "ابحث عن دراجة، ماركة...", tous: "الكل",
@@ -557,14 +559,14 @@
                 repriseDesc: "اقترح دراجتك الحالية. سيقوم فريقنا بمعاينتها وتقييم الفارق المادي بينها وبين الدراجة المطلوبة.", yourCar: "معلومات دراجتك الحالية",
                 year: "سنة الصنع", km: "المسافة المقطوعة", paint: "حالة الهيكل (Carénage)", target: "الدراجة التي تريدها من المعرض", sendProposal: "إرسال العرض الآن",
                 successToast: "تمت العملية بنجاح!", errorFields: "يرجى ملء جميع الحقول!", discover: "المعرض",
-                reprise: "مبادلة", contact: "اتصل بنا", paintedZone: "قطعة بها رتوشات / خدوش", cleanZone: "قطعة سليمة وأصلية",
+                reprise: "مبادلة", admin: "الإدارة", paintedZone: "قطعة بها رتوشات / خدوش", cleanZone: "قطعة سليمة وأصلية",
                 touchDetails: "التفاصيل فقط", price: "السعر المطلوب", engine: "المحرك", color: "اللون",
-                contactSeller: "تواصل مع البائع للتفاوض", soldBadge: "مباعة ❌", totalBikes: "إجمالي الدراجات"
+                contactSeller: "تواصل مع البائع للتفاوض", soldBadge: "مباعة", totalBikes: "إجمالي الدراجات",
+                addedSuccess: "تمت إضافة الدراجة للكاتالوج بنجاح 🏍️🔥"
             }
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            setupIntelligentHoldAnimation();
             setupHiresOnTheFlyImageCompressor();
             renderShowroomGrid();
             buildRepriseTargetDropdown();
@@ -572,56 +574,30 @@
             applyLanguage();
         });
 
-        function setupIntelligentHoldAnimation() {
-            const trigger = document.getElementById('secretAdminTrigger');
-            const svg = document.getElementById('holdProgressSvg');
-            const bar = document.getElementById('holdProgressBar');
-            let holdTimer = null;
-
-            const startHold = (e) => {
-                e.preventDefault(); 
-                
-                svg.classList.remove('opacity-0');
-                svg.classList.add('opacity-100');
-                trigger.classList.add('holding');
-                
-                bar.style.transition = 'stroke-dashoffset 3s linear';
-                bar.style.strokeDashoffset = '0';
-
-                holdTimer = setTimeout(() => {
-                    resetHold();
-                    triggerToastNotification("بوابة الإدارة جاهزة");
-                    openBiometricPinOverlay();
-                }, 3000);
-            };
-
-            const abortHold = () => { resetHold(); };
-
-            const resetHold = () => {
-                if (holdTimer) clearTimeout(holdTimer);
-                svg.classList.add('opacity-0');
-                svg.classList.remove('opacity-100');
-                trigger.classList.remove('holding');
-                
-                bar.style.transition = 'none';
-                bar.style.strokeDashoffset = '283'; 
-            };
-
-            trigger.addEventListener('touchstart', startHold, {passive: false});
-            trigger.addEventListener('touchend', abortHold);
-            trigger.addEventListener('touchcancel', abortHold);
-            trigger.addEventListener('mousedown', startHold);
-            trigger.addEventListener('mouseup', abortHold);
-            trigger.addEventListener('mouseleave', abortHold);
-        }
-
+        // STREAMING_CHUNK:Admin Auth Functions
         function openBiometricPinOverlay() {
-            document.getElementById('biometricPinOverlay').classList.remove('hidden');
+            if(state.isOwnerSession) { 
+                document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' }); 
+                return; 
+            }
+            const bg = document.getElementById('biometricPinOverlay'); 
+            const box = document.getElementById('pinBox');
+            bg.classList.remove('hidden'); 
+            setTimeout(() => { 
+                bg.classList.add('opacity-100'); 
+                box.classList.remove('scale-95'); 
+                box.classList.add('scale-100'); 
+            }, 10);
             document.getElementById('pinInput').focus();
         }
 
         function closeBiometricPinOverlay() {
-            document.getElementById('biometricPinOverlay').classList.add('hidden');
+            const bg = document.getElementById('biometricPinOverlay'); 
+            const box = document.getElementById('pinBox');
+            bg.classList.remove('opacity-100'); 
+            box.classList.add('scale-95'); 
+            box.classList.remove('scale-100');
+            setTimeout(() => bg.classList.add('hidden'), 300); 
             document.getElementById('pinInput').value = '';
         }
 
@@ -633,7 +609,7 @@
                 closeBiometricPinOverlay();
                 evalOwnerCockpitUi();
                 triggerToastNotification("تم تفعيل نظام إدارة المالك بنجاح");
-                document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' }), 300);
                 input.value = '';
             } else if (input.value.length === 4) {
                 alert("الرمز السري غير صحيح.");
@@ -669,7 +645,7 @@
             document.getElementById('analyticsTotalValue').innerText = accumulatedValue.toFixed(0) + " M";
         }
 
-        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE (IMPROVED FOR MEMORY) =================
+        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE =================
         function setupHiresOnTheFlyImageCompressor() {
             document.getElementById('imageInputLoader').addEventListener('change', function(e) {
                 const files = e.target.files;
@@ -687,7 +663,6 @@
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 
-                                // تم تصغير الحجم لتفادي إمتلاء الذاكرة بسرعة
                                 const limitDim = 600; 
                                 let w = img.width;
                                 let h = img.height;
@@ -702,7 +677,6 @@
                                 canvas.height = h;
                                 ctx.drawImage(img, 0, 0, w, h);
                                 
-                                // تم تقليل الجودة قليلاً (0.5 بدلا من 0.65) للحفاظ على LocalStorage
                                 const base64Webp = canvas.toDataURL('image/jpeg', 0.5);
                                 state.temporaryImages64.push(base64Webp);
                                 resolved++;
@@ -717,6 +691,7 @@
             });
         }
 
+        // STREAMING_CHUNK:Add Bike & Inventory Management
         function processNewLuxuryCar(e) {
             e.preventDefault();
             if (state.temporaryImages64.length === 0) {
@@ -752,10 +727,9 @@
             state.temporaryImages64 = [];
             document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-500'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
             
-            // Notification مخصصة كما طلبت
-            triggerToastNotification("CBN RAHI TAL3AT F CATALOGUE 🏍️🔥");
+            // Localized Success Message
+            triggerToastNotification(lexicons[state.lang].addedSuccess);
             
-            // النزول التلقائي للكتالوج لرؤية الدراجة مباشرة
             setTimeout(() => {
                 document.getElementById('cars-grid-feed').scrollIntoView({ behavior: 'smooth' });
             }, 500);
@@ -777,22 +751,20 @@
             syncStateToLocalStorage();
         }
 
-        // ================== FIXED LOCALSTORAGE CACHE SYSTEM ==================
         function syncStateToLocalStorage() {
             try {
                 localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
             } catch (error) {
                 console.error("الذاكرة ممتلئة LocalStorage القصور: ", error);
-                // الدراجة ستظهر في الموقع للزوار حالياً حتى لو لم يتم الحفظ بالهاتف!
             }
             
-            // هذه الأسطر مهمة جداً لظهور الدراجة (يجب أن تكون خارج Try Catch)
             renderShowroomGrid();
             renderAdminStockList();
             buildRepriseTargetDropdown();
             calculateCorporateSaaSMetrics();
         }
 
+        // STREAMING_CHUNK:Language Operations
         // ================= DYNAMIC TRANSLATION RENDERERS =================
         function switchLanguage() {
             state.lang = state.lang === 'fr' ? 'ar' : 'fr';
@@ -815,7 +787,7 @@
             document.getElementById('search-input').placeholder = lexicons[state.lang].searchPlaceholder;
             document.getElementById('nav-discover').innerText = lexicons[state.lang].discover;
             document.getElementById('nav-reprise').innerText = lexicons[state.lang].reprise;
-            document.getElementById('nav-contact').innerText = lexicons[state.lang].contact;
+            document.getElementById('nav-admin').innerText = lexicons[state.lang].admin; // Updated Admin text
 
             document.getElementById('label-price-requested').innerText = lexicons[state.lang].price;
             document.getElementById('tab-specs').innerText = lexicons[state.lang].specsTab;
@@ -893,6 +865,7 @@
             });
         }
 
+        // STREAMING_CHUNK:Grid Rendering
         function renderShowroomGrid() {
             const mainStream = document.getElementById('cars-grid-feed');
             const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
@@ -908,32 +881,34 @@
 
             databaseSubset.forEach(car => {
                 const sold = car.status === 'vendue';
-                // حماية من الأخطاء في حالة كان sbiha فارغاً
                 const sbihaSafe = car.sbiha || "";
                 const detailAccentClass = sbihaSafe.toLowerCase().includes('00') || sbihaSafe.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
 
+                // Removed grayscale and added slight border glow for sold items
+                const soldFrameClass = sold ? 'border border-laserred/40 shadow-[0_0_20px_rgba(244,63,94,0.15)]' : 'border border-white/5';
+
                 mainStream.innerHTML += `
-                <div class="card-animate card-premium rounded-[28px] overflow-hidden relative ${sold ? 'grayscale brightness-[45%] border border-zinc-900' : 'border border-white/5'}">
-                    ${sold ? `<div class="sold-ribbon">${lexicons[state.lang].soldBadge}</div>` : ''}
+                <div class="card-animate card-premium rounded-[28px] overflow-hidden relative bg-cardgray transition-transform active:scale-[0.98] ${soldFrameClass}">
+                    ${sold ? `<div class="ribbon-sold-pro">${lexicons[state.lang].soldBadge}</div>` : ''}
 
                     <div class="relative h-80 w-full" onmouseenter="freezeFeedCarouselScroller(${car.id})" onmouseleave="igniteFeedCarouselScroller(${car.id})">
                         <div id="feed-image-track-${car.id}" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" dir="ltr" onscroll="syncImageIndicatorTrack(this, ${car.id})" onclick="openDetailSheet(${car.id})">
                             ${car.images.map(img => `
                                 <div class="swipe-slide h-full w-full snap-center shrink-0 relative">
                                     <img src="${img}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
                                 </div>
                             `).join('')}
                         </div>
 
-                        <span class="absolute top-4 ${state.lang === 'ar' ? 'right-4' : 'left-4'} bg-motopistache text-black text-[10px] font-black px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(161,232,39,0.4)]" dir="ltr">${car.annee}</span>
-                        <div class="absolute top-4 ${state.lang === 'ar' ? 'left-4' : 'right-4'} bg-black/60 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold" dir="ltr">
+                        <span class="absolute top-4 ${state.lang === 'ar' ? 'right-4' : 'left-4'} bg-white/10 backdrop-blur border border-white/20 text-white text-[10px] font-black px-3 py-1.5 rounded-lg z-30" dir="ltr">${car.annee}</span>
+                        <div class="absolute top-4 ${state.lang === 'ar' ? 'left-4' : 'right-4'} bg-black/60 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold z-30" dir="ltr">
                             <i class="fa-solid fa-images text-motopistache mr-1"></i> ${car.images.length}
                         </div>
 
-                        <div class="absolute bottom-6 w-full px-4 pointer-events-none text-right">
+                        <div class="absolute bottom-6 w-full px-4 pointer-events-none text-right z-30">
                             <div class="flex justify-between items-end mb-3">
-                                <span class="text-base font-black text-motopistache drop-shadow-md" dir="ltr">${car.prix}</span>
+                                <span class="text-base font-black ${sold ? 'text-laserred' : 'text-motopistache'} drop-shadow-md" dir="ltr">${car.prix}</span>
                                 <div class="text-right flex flex-col items-end">
                                     <span class="text-[9px] text-zinc-200 font-black uppercase tracking-widest block mb-0.5 drop-shadow-md" dir="ltr">${car.marque}</span>
                                     <h2 class="text-xl font-black text-white leading-none tracking-tight drop-shadow-lg" dir="ltr">${car.modele}</h2>
@@ -945,12 +920,12 @@
                             </div>
                         </div>
 
-                        <div class="absolute bottom-3 w-full flex justify-center gap-1.5 pointer-events-none" dir="ltr">
+                        <div class="absolute bottom-3 w-full flex justify-center gap-1.5 pointer-events-none z-30" dir="ltr">
                             ${car.images.map((_, i) => `<span class="track-dot-item-${car.id} h-1 rounded-full transition-all duration-300 ${i === 0 ? 'bg-motopistache w-4' : 'bg-white/20 w-1.5'}"></span>`).join('')}
                         </div>
                     </div>
 
-                    <div class="bg-motopistache/10 border-t border-motopistache/20 text-motopistache hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
+                    <div class="bg-cardgray border-t border-white/5 text-zinc-400 hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
                         <span>${sold ? lexicons[state.lang].soldBadge : lexicons[state.lang].touchDetails}</span>
                         <i class="fa-solid fa-chevron-up text-[9px] animate-bounce"></i>
                     </div>
@@ -962,6 +937,7 @@
             renderBrandFilterTrack();
         }
 
+        // STREAMING_CHUNK:Details & Modals Interactions
         function openDetailSheet(id) {
             const car = state.vehicles.find(v => v.id === id);
             if (!car) return;
@@ -1096,9 +1072,10 @@
         function triggerToastNotification(text) {
             const toast = document.getElementById('toastAlert');
             document.getElementById('toast-txt').innerText = text;
-            toast.className = "fixed top-6 left-1/2 -translate-x-1/2 z-[100] transform translate-y-0 opacity-100 transition-all duration-500";
-            setTimeout(() => { toast.className = "fixed top-6 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-24 opacity-0 transition-all duration-500"; }, 3000);
+            toast.className = "fixed top-6 left-1/2 -translate-x-1/2 z-[9999] transform translate-y-0 opacity-100 transition-all duration-500";
+            setTimeout(() => { toast.className = "fixed top-6 left-1/2 -translate-x-1/2 z-[9999] transform -translate-y-24 opacity-0 transition-all duration-500"; }, 3000);
         }
     </script>
 </body>
 </html>
+```eof
