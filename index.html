@@ -100,7 +100,7 @@
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0,0,0,0.4);
         }
 
-        /* 🔴 التعديل: شريط المباع بدون Mode Sombre */
+        /* شريط المباع الإحترافي بدون تظليل الصورة */
         .ribbon-sold-pro {
             position: absolute; 
             top: 25px; 
@@ -118,21 +118,6 @@
         }
         html[dir="rtl"] .ribbon-sold-pro { left: -35px; transform: rotate(-45deg); }
         html[dir="ltr"] .ribbon-sold-pro { right: -35px; transform: rotate(45deg); }
-
-        .secret-trigger-area {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .secret-trigger-area.holding {
-            transform: scale(1.10);
-        }
-        
-        .progress-ring__circle {
-            transition: stroke-dashoffset 3s linear;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
 
         .toggle-switch-input:checked + .toggle-switch-label {
             background-color: rgba(16, 185, 129, 0.2);
@@ -180,17 +165,19 @@
         </header>
 
         <!-- ================= BIOMETRIC SECRET SCREEN (PIN VERIFICATION) ================= -->
-        <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center hidden">
-            <div class="w-80 p-6 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)]">
+        <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="w-80 p-8 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)] relative transform scale-95 transition-transform duration-300" id="pinBox">
+                <button onclick="closeBiometricPinOverlay()" class="absolute top-4 left-4 text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
                 <div class="flex flex-col items-center gap-3">
-                    <i class="fa-solid fa-shield-halved text-motopistache text-5xl animate-pulse-pistache"></i>
-                    <h3 class="text-sm font-black text-white uppercase tracking-wider">نظام إدارة المعرض</h3>
-                    <p class="text-[10px] text-zinc-400 font-bold">يرجى إدخال الرمز السري الخاص بالمالك</p>
+                    <div class="w-16 h-16 rounded-full bg-motopistache/10 flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-motopistache text-3xl animate-pulse-pistache"></i>
+                    </div>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider" id="lbl-auth-title">نظام إدارة المعرض</h3>
+                    <p class="text-[10px] text-zinc-400 font-bold" id="lbl-auth-desc">أدخل الرمز السري الخاص بالمالك (7777)</p>
                 </div>
                 <div class="flex justify-center gap-2">
-                    <input type="password" maxlength="4" id="pinInput" class="w-40 bg-black border border-white/10 rounded-xl p-3 text-center text-xl tracking-[1.5em] font-black text-motopistache focus:outline-none focus:border-motopistache focus:shadow-[0_0_15px_rgba(161,232,39,0.3)] transition-all" oninput="handlePinSubmission()" dir="ltr">
+                    <input type="password" maxlength="4" id="pinInput" class="w-48 mx-auto bg-black border border-white/10 rounded-2xl p-4 text-center text-2xl tracking-[1em] font-black text-motopistache focus:outline-none focus:border-motopistache block transition-all" oninput="handlePinSubmission()" dir="ltr">
                 </div>
-                <button onclick="closeBiometricPinOverlay()" class="text-xs font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition">إلغاء العملية</button>
             </div>
         </div>
 
@@ -207,11 +194,10 @@
                     </div>
                 </div>
                 <button onclick="lockAdminSession()" class="bg-red-500/10 text-red-500 border border-red-500/20 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-500 hover:text-white transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-lock"></i> قفل
+                    <i class="fa-solid fa-lock"></i> قفل الإدارة
                 </button>
             </div>
 
-            <!-- إحصائيات النظام -->
             <div class="grid grid-cols-2 gap-3 relative z-10">
                 <div class="bg-black p-4 rounded-2xl border border-white/5 shadow-inner">
                     <div class="flex justify-between items-center mb-1">
@@ -229,7 +215,6 @@
                 </div>
             </div>
 
-            <!-- إضافة دراجة جديدة -->
             <form id="ownerCarForm" onsubmit="processNewLuxuryCar(event)" class="space-y-5 relative z-10 bg-black/40 p-5 rounded-2xl border border-white/5">
                 <div class="flex items-center gap-2 mb-2">
                     <span class="w-1.5 h-4 bg-motopistache rounded-full"></span>
@@ -273,7 +258,6 @@
                     </div>
                 </div>
 
-                <!-- فحص الهيكل / كاريناج (Motos) -->
                 <div class="bg-cardgray border border-white/5 p-4 rounded-xl space-y-3 shadow-inner">
                     <span class="text-[10px] font-black text-motopistache block">حالة الهيكل / كاريناج الدراجة</span>
                     <p class="text-[9px] text-zinc-500 font-bold">حدد الأجزاء التي تحتوي على رتوشات أو عيوب:</p>
@@ -286,7 +270,6 @@
                     <input type="text" id="addPaintVerdict" placeholder="وصف حالة الهيكل (مثال: نقية 100%...)" required class="w-full bg-black rounded-lg p-3 text-xs text-white border border-white/5 focus:border-motopistache transition-all">
                 </div>
 
-                <!-- رفع الصور -->
                 <div class="relative w-full bg-cardgray border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center gap-3 hover:border-motopistache transition-all group">
                     <input type="file" id="imageInputLoader" accept="image/*" multiple required class="absolute inset-0 opacity-0 cursor-pointer z-10">
                     <div class="w-12 h-12 rounded-full bg-motopistache/10 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -295,12 +278,11 @@
                     <span id="compressorLog" class="text-[10px] text-zinc-400 font-bold text-center">اضغط لرفع صور الدراجة بجودة عالية<br><span class="text-zinc-600">(يتم ضغطها تلقائياً لتسريع الموقع)</span></span>
                 </div>
 
-                <button id="btnSubmitAdd" type="submit" class="w-full bg-motopistache hover:bg-lime-500 text-black py-4 rounded-xl font-black text-sm shadow-[0_5px_20px_rgba(161,232,39,0.3)] transition-all active:scale-95">
+                <button type="submit" id="btnSubmitAdd" class="w-full bg-motopistache hover:bg-lime-500 text-black py-4 rounded-xl font-black text-sm shadow-[0_5px_20px_rgba(161,232,39,0.3)] transition-all active:scale-95">
                     إضافة الدراجة للمعرض <i class="fa-solid fa-arrow-left ml-2"></i>
                 </button>
             </form>
 
-            <!-- تسيير المخزون بـ Switch -->
             <div class="pt-2 space-y-3 relative z-10">
                 <div class="flex items-center gap-2 mb-4">
                     <span class="w-1.5 h-4 bg-zinc-500 rounded-full"></span>
@@ -318,14 +300,11 @@
             </div>
             
             <div class="flex overflow-x-auto gap-2 py-1 hide-scrollbar" id="brand-scroller-track" dir="ltr">
-                <!-- Filled dynamically -->
             </div>
         </div>
 
         <!-- SHOWROOM LIVE MOTO STACKS -->
-        <main class="p-4 space-y-5" id="cars-grid-feed">
-            <!-- Dynamic interactive cards load here -->
-        </main>
+        <main class="p-4 space-y-5" id="cars-grid-feed"></main>
 
         <!-- LUXURY SOCIAL CONNECTIONS & GPS ROUTING -->
         <div class="p-6 border-t border-white/5 bg-neutral-950/40 text-center space-y-6 mt-12 mb-12">
@@ -349,7 +328,7 @@
             </div>
         </div>
 
-        <!-- 🔴 التعديل: PREMIUM NAVIGATION BAR -->
+        <!-- 🔴 التعديل: استبدال زر الاتصال بزر الإدارة -->
         <nav class="premium-blur-header fixed bottom-0 w-full max-w-[440px] flex justify-around items-center pt-3.5 pb-6 z-40">
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-motopistache transition-all hover:scale-105">
                 <i class="fa-solid fa-motorcycle text-lg mb-1"></i>
@@ -370,17 +349,17 @@
     <!-- ================= PREMIUM DETAILS BOTTOM SHEET ================= -->
     <div id="detailSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeDetailSheet()"></div>
+        
+        <!-- 🔴 التعديل: زر الإغلاق الثابت والمميز -->
+        <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
         <div class="relative w-full max-w-[440px] mx-auto h-[95vh] bg-metalic border-t border-motopistache/30 rounded-t-[32px] flex flex-col transition-transform duration-500 shadow-[0_-10px_40px_rgba(161,232,39,0.1)]" id="detailSheetContainer">
             <div class="w-12 h-1.5 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
-            
-            <!-- 🔴 التعديل: زر الإغلاق الثابت -->
-            <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
 
             <div class="flex-1 overflow-y-auto pb-28 hide-scrollbar">
                 
-                <!-- Gallery Swipe View -->
                 <div class="relative h-80 bg-black" dir="ltr">
                     <div id="modal-image-swiper" class="swipe-container h-full w-full overflow-x-auto flex snap-x snap-mandatory" onscroll="syncSwiperImageCounter()">
                     </div>
@@ -399,13 +378,11 @@
                     <span id="modal-price" class="text-lg font-black text-white bg-motopistache/10 border border-motopistache/30 px-4 py-2 rounded-xl text-shadow-sm" dir="ltr">00 DA</span>
                 </div>
 
-                <!-- Information Tabs -->
                 <div class="flex border-b border-white/5 bg-cardgray text-center text-[11px] font-black">
                     <button onclick="switchDetailsTabPane('specs')" id="tab-specs" class="tab-btn flex-1 py-4 border-b-2 border-motopistache text-motopistache transition shadow-[0_4px_15px_-5px_rgba(161,232,39,0.2)]">التفاصيل الفنية</button>
                     <button onclick="switchDetailsTabPane('paint')" id="tab-paint" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-zinc-500 transition">حالة الهيكل</button>
                 </div>
 
-                <!-- Tab Specs Content -->
                 <div id="pane-specs" class="p-4 space-y-3" dir="ltr">
                     <div class="grid grid-cols-2 gap-3 text-xs">
                         <div class="bg-cardgray border border-white/5 p-4 rounded-2xl flex items-center justify-end gap-3 text-right">
@@ -432,7 +409,6 @@
                     </div>
                 </div>
 
-                <!-- Tab Paint Interactive SVG Diagram (MOTO Version) -->
                 <div id="pane-paint" class="p-4 space-y-3 hidden">
                     <div class="bg-cardgray border border-white/5 rounded-3xl p-5 shadow-xl">
                         <div class="flex justify-between items-center mb-4">
@@ -440,31 +416,17 @@
                             <span class="bg-laserred/10 border border-laserred/20 text-laserred text-[9px] font-black px-3 py-1 rounded" id="badge-paint-label">ملاحظات</span>
                         </div>
                         
-                        <!-- MOTO SVG Abstract Scanner -->
                         <div class="flex justify-center py-5 bg-[#050508] rounded-2xl border border-white/5 mb-5 shadow-inner">
                             <svg class="w-56 h-auto" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Wheels -->
                                 <circle cx="90" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
                                 <circle cx="90" cy="140" r="15" fill="#52525b"/>
                                 <circle cx="310" cy="140" r="35" fill="#15151f" stroke="#25252f" stroke-width="4"/>
                                 <circle cx="310" cy="140" r="15" fill="#52525b"/>
-                                
-                                <!-- Frame/Engine base -->
                                 <path d="M120 140 L160 80 L240 80 L280 140 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2"/>
-                                
-                                <!-- Tank (p_hood/Reservoir) -->
                                 <path id="svg-hood" d="M160 80 C180 40, 240 40, 250 80 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Front Fairing (p_fdoor) -->
                                 <path id="svg-front-door" d="M250 80 L280 40 L310 90 L260 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Side Fairing (p_bdoor) -->
                                 <path id="svg-back-door" d="M180 80 L250 80 L230 130 L160 110 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Tail (p_bwing) -->
                                 <path id="svg-back-wing" d="M160 80 L80 60 L60 80 L120 100 Z" fill="#15151f" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
-                                
-                                <!-- Front Fork -->
                                 <line x1="280" y1="40" x2="310" y2="140" stroke="#52525b" stroke-width="6"/>
                             </svg>
                         </div>
@@ -478,13 +440,11 @@
                 </div>
             </div>
 
-            <!-- Modal Action WhatsApp Contact CTA -->
             <div class="absolute bottom-0 w-full p-4 bg-cardgray/95 backdrop-blur-md border-t border-white/5 pb-6 flex z-50">
                 <a id="modal-whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-4 rounded-2xl flex items-center justify-center active:scale-95 transition-all text-sm shadow-lg shadow-green-600/20">
                     <i class="fa-brands fa-whatsapp text-xl ml-2"></i> <span id="label-contact-seller">تواصل مع البائع للتفاوض</span>
                 </a>
             </div>
-
         </div>
     </div>
 
@@ -542,12 +502,15 @@
     <script>
         const WHATSAPP_CONTACT_HOTLINE = "213664925785";
 
-        // 🔴 التعديل: ربط Supabase
-        const SUPABASE_URL = "https://fatgvakfpxsycrjleknt.supabase.co";
+        // 🔴 التعديل: إعداد Supabase مع الكود الذي أرسلته
+        const SUPABASE_URL = "https://fatgvakfpxsycrjleknt.supabase.co"; 
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGd2YWtmcHhzeWNyamxla250Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MjY2MjQsImV4cCI6MjEwMDIwMjYyNH0.7_DSLql8sjTSjnUSYVJZIwGVTPJ9lhOiG192oJKBOM0";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        let supabaseClient = null;
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
 
-        // قاعدة بيانات ديمو خاصة بالدراجات النارية (Motos)
         const demoWarehouseVehicles = [
             {
                 id: 1, marque: "YAMAHA", modele: "TMAX 560 Tech Max", annee: "2023", prix: "420M", km: "8 000 km", moteur: "560cc", boite: "AUTOMATIQUE", couleur: "Dark Petrol",
@@ -568,9 +531,9 @@
         let state = {
             lang: 'ar',
             currentBrand: 'Tous',
-            vehicles: [], // سيتم جلبها من السيرفر
+            vehicles: [],
             activeViewingIndex: null,
-            isOwnerSession: false, // 🔴 التعديل: الدخول دائما للكتالوج
+            isOwnerSession: false,
             temporaryImages64: []
         };
 
@@ -582,7 +545,7 @@
                 repriseDesc: "Proposez votre moto actuelle. Notre équipe évaluera la différence de prix.", yourCar: "Votre Moto",
                 year: "Année", km: "KM", paint: "État Carénage", target: "Moto souhaitée", sendProposal: "Envoyer l'offre",
                 successToast: "Opération traitée avec succès !", errorFields: "Champs obligatoires !", discover: "Catalogue",
-                reprise: "Échange", admin: "Admin", paintedZone: "Zone touchée / Rayure", cleanZone: "Zone intacte",
+                reprise: "Échange", admin: "Administration", paintedZone: "Zone touchée / Rayure", cleanZone: "Zone intacte",
                 touchDetails: "Détails Uniquement", price: "Prix demandé", engine: "Moteur", color: "Couleur",
                 contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDUE", totalBikes: "Total Motos",
                 addedSuccess: "Ajouté au catalogue avec succès 🏍️🔥" // 🔴 التعديل
@@ -591,7 +554,7 @@
                 showroom: "الوادي، الجزائر", searchPlaceholder: "ابحث عن دراجة، ماركة...", tous: "الكل",
                 specsTab: "التفاصيل الفنية", paintTab: "حالة الهيكل", paintScan: "فحص الهيكل الدقيق",
                 sbihaLabel: "ملاحظات", repriseTitle: "طلب استبدال دراجة (Reprise)",
-                repriseDesc: "اقترح دراجتك الحالية. سيقوم فريقنا بمعاينتها وتقييم الفارق المادي.", yourCar: "معلومات دراجتك الحالية",
+                repriseDesc: "اقترح دراجتك الحالية. سيقوم فريقنا بمعاينتها وتقييم الفارق المادي بينها وبين الدراجة المطلوبة.", yourCar: "معلومات دراجتك الحالية",
                 year: "سنة الصنع", km: "المسافة المقطوعة", paint: "حالة الهيكل (Carénage)", target: "الدراجة التي تريدها من المعرض", sendProposal: "إرسال العرض الآن",
                 successToast: "تمت العملية بنجاح!", errorFields: "يرجى ملء جميع الحقول!", discover: "المعرض",
                 reprise: "مبادلة", admin: "الإدارة", paintedZone: "قطعة بها رتوشات / خدوش", cleanZone: "قطعة سليمة وأصلية",
@@ -602,13 +565,15 @@
         };
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // 🔴 التعديل: جلب البيانات من Supabase عند الـ Refresh
+            // 🔴 التعديل: جلب البيانات من Supabase عند التحميل
             try {
-                const { data, error } = await supabase.from('motorcycles').select('*').order('id', { ascending: false });
-                if (data && data.length > 0) {
-                    state.vehicles = data;
-                } else {
-                    state.vehicles = demoWarehouseVehicles;
+                if (supabaseClient) {
+                    const { data, error } = await supabaseClient.from('motorcycles').select('*').order('id', { ascending: false });
+                    if (data && data.length > 0) {
+                        state.vehicles = data;
+                    } else {
+                        state.vehicles = demoWarehouseVehicles;
+                    }
                 }
             } catch (err) {
                 console.error("Supabase load error:", err);
@@ -636,6 +601,7 @@
             const input = document.getElementById('pinInput');
             if (input.value === "7777") {
                 state.isOwnerSession = true;
+                localStorage.setItem('isOwnerVerified', 'true');
                 closeBiometricPinOverlay();
                 evalOwnerCockpitUi();
                 triggerToastNotification("تم تفعيل نظام إدارة المالك بنجاح");
@@ -660,6 +626,7 @@
 
         function lockAdminSession() {
             state.isOwnerSession = false;
+            localStorage.setItem('isOwnerVerified', 'false');
             evalOwnerCockpitUi();
             triggerToastNotification("تم قفل الجلسة بأمان");
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -695,7 +662,7 @@
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 
-                                // 🔴 التعديل: جودة أعلى
+                                // 🔴 التعديل: جودة عالية (1000px)
                                 const limitDim = 1000;
                                 let w = img.width;
                                 let h = img.height;
@@ -706,7 +673,8 @@
                                     if (h > limitDim) { w *= limitDim / h; h = limitDim; }
                                 }
 
-                                canvas.width = w; canvas.height = h;
+                                canvas.width = w;
+                                canvas.height = h;
                                 ctx.drawImage(img, 0, 0, w, h);
                                 
                                 const base64Webp = canvas.toDataURL('image/jpeg', 0.80);
@@ -753,18 +721,21 @@
 
             state.vehicles.unshift(freshVehicle);
             
-            // تحديث الواجهة فوراً
             renderShowroomGrid();
             renderAdminStockList();
             
-            // 🔴 التعديل: الرفع للسيرفر
-            try {
-                await supabase.from('motorcycles').insert([freshVehicle]);
-            } catch(e) { console.error(e); }
+            // 🔴 التعديل: الرفع المباشر لـ Supabase
+            if (supabaseClient) {
+                try {
+                    await supabaseClient.from('motorcycles').insert([freshVehicle]);
+                } catch(err) { console.error("Upload error:", err); }
+            }
 
+            syncStateToLocalStorage();
+            
             document.getElementById('ownerCarForm').reset();
             state.temporaryImages64 = [];
-            document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-500'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
+            document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-600'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
             
             triggerToastNotification(lexicons[state.lang].addedSuccess);
             
@@ -779,11 +750,14 @@
                 renderShowroomGrid();
                 renderAdminStockList();
                 
-                // 🔴 التعديل: الحذف من السيرفر
-                try {
-                    await supabase.from('motorcycles').delete().eq('id', id);
-                } catch(e) {}
+                // 🔴 التعديل: الحذف المباشر من Supabase
+                if (supabaseClient) {
+                    try {
+                        await supabaseClient.from('motorcycles').delete().eq('id', id);
+                    } catch(err) {}
+                }
 
+                syncStateToLocalStorage();
                 triggerToastNotification("تم حذف الدراجة من المخزون.");
             }
         }
@@ -800,10 +774,19 @@
             renderShowroomGrid();
             renderAdminStockList();
 
-            // 🔴 التعديل: التحديث في السيرفر
-            try {
-                await supabase.from('motorcycles').update({ status: newStatus }).eq('id', id);
-            } catch(e) {}
+            // 🔴 التعديل: التحديث في Supabase
+            if (supabaseClient) {
+                try {
+                    await supabaseClient.from('motorcycles').update({ status: newStatus }).eq('id', id);
+                } catch(err) {}
+            }
+
+            syncStateToLocalStorage();
+        }
+
+        function syncStateToLocalStorage() {
+            localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
+            calculateCorporateSaaSMetrics();
         }
 
         // ================= DYNAMIC TRANSLATION RENDERERS =================
@@ -885,9 +868,7 @@
             liveFeedCarousels[id] = setInterval(() => {
                 const size = viewport.offsetWidth;
                 let targetLocation = viewport.scrollLeft + size;
-                if (targetLocation >= viewport.scrollWidth - 10) {
-                    targetLocation = 0;
-                }
+                if (targetLocation >= viewport.scrollWidth - 10) { targetLocation = 0; }
                 viewport.scrollTo({ left: targetLocation, behavior: 'smooth' });
             }, 3500);
         }
@@ -923,7 +904,8 @@
 
             databaseSubset.forEach(car => {
                 const sold = car.status === 'vendue';
-                const detailAccentClass = car.sbiha.toLowerCase().includes('00') || car.sbiha.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
+                const sbihaSafe = car.sbiha || "نقية";
+                const detailAccentClass = sbihaSafe.toLowerCase().includes('00') || sbihaSafe.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
                 
                 // 🔴 التعديل: إزالة السواد عن الدراجة المباعة
                 const soldFrameClass = sold ? 'border border-laserred/40 shadow-[0_0_15px_rgba(244,63,94,0.15)]' : 'border border-white/5';
@@ -937,12 +919,13 @@
                             ${car.images.map(img => `
                                 <div class="swipe-slide h-full w-full snap-center shrink-0 relative">
                                     <img src="${img}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
                                 </div>
                             `).join('')}
                         </div>
 
-                        <span class="absolute top-4 ${state.lang === 'ar' ? 'right-4' : 'left-4'} bg-motopistache text-black text-[10px] font-black px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(161,232,39,0.4)] z-30" dir="ltr">${car.annee}</span>
+                        <span class="absolute top-4 ${state.lang === 'ar' ? 'right-4' : 'left-4'} bg-white/10 backdrop-blur border border-white/20 text-white text-[10px] font-black px-3 py-1.5 rounded-lg z-30" dir="ltr">${car.annee}</span>
+                        
                         <div class="absolute top-4 ${state.lang === 'ar' ? 'left-4' : 'right-4'} bg-black/60 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold z-30" dir="ltr">
                             <i class="fa-solid fa-images text-motopistache mr-1"></i> ${car.images.length}
                         </div>
@@ -951,12 +934,12 @@
                             <div class="flex justify-between items-end mb-3">
                                 <span class="text-base font-black ${sold ? 'text-laserred' : 'text-motopistache'} drop-shadow-md" dir="ltr">${car.prix}</span>
                                 <div class="text-right flex flex-col items-end">
-                                    <span class="text-[9px] text-zinc-200 font-black uppercase tracking-widest block mb-0.5 drop-shadow-md" dir="ltr">${car.marque}</span>
-                                    <h2 class="text-xl font-black text-white leading-none tracking-tight drop-shadow-lg" dir="ltr">${car.modele}</h2>
+                                    <span class="text-[9px] text-zinc-200 font-black uppercase block mb-0.5 drop-shadow-md" dir="ltr">${car.marque}</span>
+                                    <h2 class="text-xl font-black text-white leading-none drop-shadow-lg" dir="ltr">${car.modele}</h2>
                                 </div>
                             </div>
                             <div class="flex justify-end gap-2 text-[10px] font-bold">
-                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 truncate max-w-[150px] ${detailAccentClass} flex items-center gap-1.5 leading-none" dir="rtl"><i class="fa-solid fa-brush"></i> ${car.sbiha}</span>
+                                <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 truncate max-w-[150px] ${detailAccentClass} flex items-center gap-1.5 leading-none" dir="rtl"><i class="fa-solid fa-brush"></i> ${sbihaSafe}</span>
                                 <span class="bg-black/80 backdrop-blur px-3 py-2 rounded-xl border border-white/10 text-white flex items-center gap-1.5 leading-none" dir="ltr"><i class="fa-solid fa-gauge-high text-motopistache text-[9px]"></i> ${car.km}</span>
                             </div>
                         </div>
@@ -966,7 +949,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-motopistache/10 border-t border-motopistache/20 text-motopistache hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
+                    <div class="bg-cardgray border-t border-white/5 text-zinc-400 hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
                         <span>${sold ? lexicons[state.lang].soldBadge : lexicons[state.lang].touchDetails}</span>
                         <i class="fa-solid fa-chevron-up text-[9px] animate-bounce"></i>
                     </div>
@@ -989,7 +972,7 @@
             document.getElementById('spec-km').innerText = car.km;
             document.getElementById('spec-engine').innerText = car.moteur;
             document.getElementById('spec-color').innerText = car.couleur;
-            document.getElementById('paint-verdict').innerText = car.sbiha;
+            document.getElementById('paint-verdict').innerText = car.sbiha || "بدون ملاحظات";
 
             const mappedZones = car.sbihaZones || { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false };
             document.getElementById('svg-hood').setAttribute('fill', mappedZones.hood ? '#f43f5e' : '#15151f');
