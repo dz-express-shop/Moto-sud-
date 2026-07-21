@@ -53,7 +53,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Alexandria:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- STREAMING_CHUNK:Styling Base Setup -->
     <style>
         body {
             background-color: #010103;
@@ -95,7 +94,6 @@
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* Premium Sold Ribbon completely redesigned (NO Grayscale needed) */
         .ribbon-sold-pro {
             position: absolute; 
             top: 25px; 
@@ -126,7 +124,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- STREAMING_CHUNK:Building App Structure & Header -->
     <div class="mobile-container pb-28">
         
         <!-- Live Marquee -->
@@ -147,7 +144,6 @@
                 <span id="label-showroom" class="text-[9px] font-black tracking-widest text-whitepure uppercase font-sans">El Oued, Algérie</span>
             </a>
             
-            <!-- Logo Section -->
             <div class="flex items-center justify-center p-2 rounded-full h-16 relative">
                 <div class="flex flex-col items-center justify-center relative z-10 leading-none">
                     <h1 class="text-lg font-black tracking-tighter uppercase brand-glow-text font-sans" dir="ltr">Moto sud+</h1>
@@ -160,7 +156,6 @@
             </button>
         </header>
 
-        <!-- STREAMING_CHUNK:Admin Auth Pin Code -->
         <!-- ================= BIOMETRIC SECRET SCREEN ================= -->
         <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
             <div class="w-80 p-8 bg-cardgray border border-motopistache/20 rounded-3xl text-center space-y-6 shadow-[0_0_50px_rgba(161,232,39,0.15)] relative transform scale-95 transition-transform duration-300" id="pinBox">
@@ -169,7 +164,7 @@
                     <div class="w-16 h-16 rounded-full bg-motopistache/10 flex items-center justify-center">
                         <i class="fa-solid fa-shield-halved text-motopistache text-3xl animate-pulse-pistache"></i>
                     </div>
-                    <h3 class="text-sm font-black text-white uppercase tracking-wider" id="lbl-auth-title">نظام إدارة المعرض</h3>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider">نظام إدارة المعرض</h3>
                     <p class="text-[10px] text-zinc-400 font-bold">يرجى إدخال الرمز السري الخاص بالمالك</p>
                 </div>
                 <div class="flex justify-center gap-2">
@@ -178,7 +173,6 @@
             </div>
         </div>
 
-        <!-- STREAMING_CHUNK:Admin Panel UI -->
         <!-- ================= ADMIN COCKPIT ================= -->
         <section id="ownerCommandCenter" class="hidden mx-4 mt-4 p-5 bg-cardgray rounded-3xl border border-motopistache/20 space-y-6 shadow-[0_0_30px_rgba(161,232,39,0.08)] animate-fade-in relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-motopistache/20 rounded-full blur-2xl pointer-events-none"></div>
@@ -273,7 +267,7 @@
                     <div class="w-12 h-12 rounded-full bg-motopistache/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-cloud-arrow-up text-motopistache text-xl"></i>
                     </div>
-                    <span id="compressorLog" class="text-[10px] text-zinc-400 font-bold text-center">اضغط لرفع صور الدراجة بجودة عالية<br><span class="text-zinc-600">(يتم ضغطها تلقائياً لتسريع الموقع)</span></span>
+                    <span id="compressorLog" class="text-[10px] text-zinc-400 font-bold text-center">اضغط لرفع صور الدراجة بجودة HD فائقة</span>
                 </div>
 
                 <button type="submit" class="w-full bg-motopistache hover:bg-lime-500 text-black py-4 rounded-xl font-black text-sm shadow-[0_5px_20px_rgba(161,232,39,0.3)] transition-all active:scale-95">
@@ -290,7 +284,6 @@
             </div>
         </section>
 
-        <!-- STREAMING_CHUNK:Filtering and Listing UI -->
         <!-- SEARCH FILTERS -->
         <div class="px-4 pt-4 space-y-3">
             <div class="relative">
@@ -327,7 +320,6 @@
             </div>
         </div>
 
-        <!-- STREAMING_CHUNK:Bottom Navbar -->
         <!-- PREMIUM NAVIGATION BAR -->
         <nav class="premium-blur-header fixed bottom-0 w-full max-w-[440px] flex justify-around items-center pt-3.5 pb-6 z-40">
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-motopistache transition-all hover:scale-105">
@@ -338,7 +330,6 @@
                 <i class="fa-solid fa-right-left text-lg mb-1"></i>
                 <span id="nav-reprise" class="text-[9px] font-black tracking-widest">مبادلة</span>
             </button>
-            <!-- الزر الجديد للإدارة بدلاً من اتصل بنا -->
             <button onclick="openBiometricPinOverlay()" class="flex flex-col items-center text-zinc-500 active:text-motopistache transition-all hover:scale-105">
                 <i class="fa-solid fa-shield-halved text-xl mb-1"></i>
                 <span id="nav-admin" class="text-[9px] font-black tracking-widest">الإدارة</span>
@@ -347,12 +338,10 @@
 
     </div>
 
-    <!-- STREAMING_CHUNK:Details Modal (With Fixed Close Button) -->
     <!-- ================= PREMIUM DETAILS BOTTOM SHEET ================= -->
     <div id="detailSheetModal" class="fixed inset-0 z-[500] hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeDetailSheet()"></div>
         
-        <!-- الزر الثابت للإغلاق (مستقل تماماً عن المحتوى) -->
         <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-3xl border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
             <i class="fa-solid fa-xmark text-xl"></i>
         </button>
@@ -450,7 +439,6 @@
         </div>
     </div>
 
-    <!-- STREAMING_CHUNK:Reprise Modal UI -->
     <!-- ================= TRADE-IN EXCHANGE SHEET (REPRISE SYSTEM) ================= -->
     <div id="repriseSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
@@ -501,10 +489,57 @@
         </div>
     </div>
 
-    <!-- STREAMING_CHUNK:Javascript Application Engine -->
     <!-- ================= MASTER ENGINE CONTROLLER JAVASCRIPT ================= -->
     <script>
         const WHATSAPP_CONTACT_HOTLINE = "213664925785";
+
+        // ================= INDEXEDDB ENGINE (ROOT PERSISTENCE SOLUTION) =================
+        const DB_NAME = 'MotoSudDatabase_v2';
+        const DB_STORE = 'motorcycles';
+
+        function initIndexedDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(DB_STORE)) {
+                        db.createObjectStore(DB_STORE, { keyPath: 'id' });
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function saveBikeToDB(bike) {
+            const db = await initIndexedDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(DB_STORE, 'readwrite');
+                tx.objectStore(DB_STORE).put(bike);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+        }
+
+        async function loadAllBikesFromDB() {
+            const db = await initIndexedDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(DB_STORE, 'readonly');
+                const req = tx.objectStore(DB_STORE).getAll();
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        async function deleteBikeFromDB(id) {
+            const db = await initIndexedDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(DB_STORE, 'readwrite');
+                tx.objectStore(DB_STORE).delete(id);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+        }
 
         const demoWarehouseVehicles = [
             {
@@ -512,28 +547,21 @@
                 sbiha: "دراجة بحالة الوكالة، خالية من العيوب.",
                 sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
                 negociable: true, status: "disponible",
-                images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=600&q=80"]
+                images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=85", "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=85"]
             },
             {
                 id: 2, marque: "BMW", modele: "S1000RR", annee: "2024", prix: "750M", km: "2 000 km", moteur: "999cc 210ch", boite: "MANUELLE", couleur: "M Motorsport",
                 sbiha: "نقية 100%، مع اكزوزت Akrapovic.",
                 sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
                 negociable: false, status: "disponible",
-                images: ["https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&w=600&q=80"]
-            },
-            {
-                id: 3, marque: "KAWASAKI", modele: "Z900", annee: "2022", prix: "310M", km: "15 000 km", moteur: "948cc", boite: "MANUELLE", couleur: "Vert/Noir",
-                sbiha: "خدش بسيط جداً في الكاريناج الأيمن.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: true, backWing: false, frontWing: false },
-                negociable: true, status: "vendue",
-                images: ["https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1615414167191-4e7cb8052140?auto=format&fit=crop&w=600&q=80"]
+                images: ["https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=800&q=85", "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?auto=format&fit=crop&w=800&q=85"]
             }
         ];
 
         let state = {
             lang: 'ar',
             currentBrand: 'Tous',
-            vehicles: JSON.parse(localStorage.getItem('motosud_db')) || demoWarehouseVehicles,
+            vehicles: [],
             activeViewingIndex: null,
             isOwnerSession: localStorage.getItem('isOwnerVerified') === 'true',
             temporaryImages64: []
@@ -566,15 +594,24 @@
             }
         };
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             setupHiresOnTheFlyImageCompressor();
+            
+            // Load persistent storage from IndexedDB
+            const savedBikes = await loadAllBikesFromDB();
+            if (savedBikes && savedBikes.length > 0) {
+                state.vehicles = savedBikes;
+            } else {
+                state.vehicles = demoWarehouseVehicles;
+                for (let v of demoWarehouseVehicles) { await saveBikeToDB(v); }
+            }
+
             renderShowroomGrid();
             buildRepriseTargetDropdown();
             evalOwnerCockpitUi();
             applyLanguage();
         });
 
-        // STREAMING_CHUNK:Admin Auth Functions
         function openBiometricPinOverlay() {
             if(state.isOwnerSession) { 
                 document.getElementById('ownerCommandCenter').scrollIntoView({ behavior: 'smooth' }); 
@@ -645,13 +682,13 @@
             document.getElementById('analyticsTotalValue').innerText = accumulatedValue.toFixed(0) + " M";
         }
 
-        // ================= HI-RES ON-THE-FLY CANVAS COMPRESSION ENGINE =================
+        // ================= HI-RES HD CANVAS COMPRESSION ENGINE (1200px HIGH QUALITY) =================
         function setupHiresOnTheFlyImageCompressor() {
             document.getElementById('imageInputLoader').addEventListener('change', function(e) {
                 const files = e.target.files;
                 state.temporaryImages64 = [];
                 if (files.length > 0) {
-                    document.getElementById('compressorLog').innerText = `جاري ضغط ومعالجة 0/${files.length} صور...`;
+                    document.getElementById('compressorLog').innerText = `جاري تجهيز 0/${files.length} صور بجودة HD...`;
                     let resolved = 0;
 
                     for (let i = 0; i < files.length; i++) {
@@ -663,7 +700,8 @@
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 
-                                const limitDim = 600; 
+                                // HD Resolution 1200px limit
+                                const limitDim = 1200; 
                                 let w = img.width;
                                 let h = img.height;
                                 
@@ -677,11 +715,12 @@
                                 canvas.height = h;
                                 ctx.drawImage(img, 0, 0, w, h);
                                 
-                                const base64Webp = canvas.toDataURL('image/jpeg', 0.5);
+                                // High quality compression 0.85 (Crystal Clear)
+                                const base64Webp = canvas.toDataURL('image/jpeg', 0.85);
                                 state.temporaryImages64.push(base64Webp);
                                 resolved++;
 
-                                document.getElementById('compressorLog').innerText = `تم تجهيز ${resolved}/${files.length} صور بنجاح`;
+                                document.getElementById('compressorLog').innerText = `تم تجهيز ${resolved}/${files.length} صور بجودة HD عالية`;
                             };
                             img.src = evt.target.result;
                         };
@@ -691,8 +730,7 @@
             });
         }
 
-        // STREAMING_CHUNK:Add Bike & Inventory Management
-        function processNewLuxuryCar(e) {
+        async function processNewLuxuryCar(e) {
             e.preventDefault();
             if (state.temporaryImages64.length === 0) {
                 alert("يرجى إرفاق صورة واحدة على الأقل للدراجة.");
@@ -721,13 +759,17 @@
             };
 
             state.vehicles.unshift(freshVehicle);
-            syncStateToLocalStorage();
+            await saveBikeToDB(freshVehicle);
+            
+            renderShowroomGrid();
+            renderAdminStockList();
+            buildRepriseTargetDropdown();
+            calculateCorporateSaaSMetrics();
             
             document.getElementById('ownerCarForm').reset();
             state.temporaryImages64 = [];
-            document.getElementById('compressorLog').innerHTML = "اضغط لرفع صور الدراجة بجودة عالية<br><span class='text-zinc-500'>(يتم ضغطها تلقائياً لتسريع الموقع)</span>";
+            document.getElementById('compressorLog').innerText = "اضغط لرفع صور الدراجة بجودة HD فائقة";
             
-            // Localized Success Message
             triggerToastNotification(lexicons[state.lang].addedSuccess);
             
             setTimeout(() => {
@@ -735,36 +777,28 @@
             }, 500);
         }
 
-        function removeInventoryItem(id) {
+        async function removeInventoryItem(id) {
             if (confirm("هل أنت متأكد من حذف هذه الدراجة من الكاتالوج بشكل نهائي؟")) {
                 state.vehicles = state.vehicles.filter(v => v.id !== id);
-                syncStateToLocalStorage();
+                await deleteBikeFromDB(id);
+                renderShowroomGrid();
+                renderAdminStockList();
+                buildRepriseTargetDropdown();
+                calculateCorporateSaaSMetrics();
                 triggerToastNotification("تم حذف الدراجة من المخزون.");
             }
         }
 
-        function toggleInventoryStatus(id) {
-            state.vehicles = state.vehicles.map(v => {
-                if (v.id === id) { v.status = v.status === 'disponible' ? 'vendue' : 'disponible'; }
-                return v;
-            });
-            syncStateToLocalStorage();
-        }
-
-        function syncStateToLocalStorage() {
-            try {
-                localStorage.setItem('motosud_db', JSON.stringify(state.vehicles));
-            } catch (error) {
-                console.error("الذاكرة ممتلئة LocalStorage القصور: ", error);
+        async function toggleInventoryStatus(id) {
+            const target = state.vehicles.find(v => v.id === id);
+            if (target) {
+                target.status = target.status === 'disponible' ? 'vendue' : 'disponible';
+                await saveBikeToDB(target);
+                renderShowroomGrid();
+                renderAdminStockList();
             }
-            
-            renderShowroomGrid();
-            renderAdminStockList();
-            buildRepriseTargetDropdown();
-            calculateCorporateSaaSMetrics();
         }
 
-        // STREAMING_CHUNK:Language Operations
         // ================= DYNAMIC TRANSLATION RENDERERS =================
         function switchLanguage() {
             state.lang = state.lang === 'fr' ? 'ar' : 'fr';
@@ -787,7 +821,7 @@
             document.getElementById('search-input').placeholder = lexicons[state.lang].searchPlaceholder;
             document.getElementById('nav-discover').innerText = lexicons[state.lang].discover;
             document.getElementById('nav-reprise').innerText = lexicons[state.lang].reprise;
-            document.getElementById('nav-admin').innerText = lexicons[state.lang].admin; // Updated Admin text
+            document.getElementById('nav-admin').innerText = lexicons[state.lang].admin;
 
             document.getElementById('label-price-requested').innerText = lexicons[state.lang].price;
             document.getElementById('tab-specs').innerText = lexicons[state.lang].specsTab;
@@ -834,7 +868,6 @@
             renderShowroomGrid();
         }
 
-        // ================= SHOWROOM GRID CAROUSELS =================
         let liveFeedCarousels = {};
         function igniteFeedCarouselScroller(id) {
             const viewport = document.getElementById(`feed-image-track-${id}`);
@@ -865,7 +898,6 @@
             });
         }
 
-        // STREAMING_CHUNK:Grid Rendering
         function renderShowroomGrid() {
             const mainStream = document.getElementById('cars-grid-feed');
             const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
@@ -883,8 +915,6 @@
                 const sold = car.status === 'vendue';
                 const sbihaSafe = car.sbiha || "";
                 const detailAccentClass = sbihaSafe.toLowerCase().includes('00') || sbihaSafe.includes('نقية') ? 'bg-zinc-950 text-zinc-400' : 'bg-laserred/15 text-laserred';
-
-                // Removed grayscale and added slight border glow for sold items
                 const soldFrameClass = sold ? 'border border-laserred/40 shadow-[0_0_20px_rgba(244,63,94,0.15)]' : 'border border-white/5';
 
                 mainStream.innerHTML += `
@@ -937,7 +967,6 @@
             renderBrandFilterTrack();
         }
 
-        // STREAMING_CHUNK:Details & Modals Interactions
         function openDetailSheet(id) {
             const car = state.vehicles.find(v => v.id === id);
             if (!car) return;
@@ -1033,13 +1062,6 @@
             triggerToastNotification(lexicons[state.lang].successToast);
         }
 
-        function openWhatsappNav() {
-            const genericMsg = state.lang === 'fr' 
-                ? `Salam Moto sud+ El Oued, je vous contacte depuis votre catalogue digital.`
-                : `السلام عليكم دراجات الجنوب + ، راني نتواصل معاكم من الكاتالوج.`;
-            window.open(`https://wa.me/${WHATSAPP_CONTACT_HOTLINE}?text=${encodeURIComponent(genericMsg)}`, '_blank');
-        }
-
         function renderAdminStockList() {
             const container = document.getElementById('adminStockList');
             container.innerHTML = '';
@@ -1078,4 +1100,3 @@
     </script>
 </body>
 </html>
-```eof
