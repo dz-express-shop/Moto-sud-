@@ -162,7 +162,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="text" id="addEngine" placeholder="المرك (ex: 560cc)" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
+                    <input type="text" id="addEngine" placeholder="المحرك (ex: 560cc)" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
                     <input type="text" id="addColor" placeholder="اللون" required class="w-full bg-cardgray border border-white/5 rounded-xl p-3 text-xs font-bold text-white focus:outline-none focus:border-motopistache" dir="ltr">
                 </div>
 
@@ -226,8 +226,6 @@
     <!-- DETAILS MODAL -->
     <div id="detailSheetModal" class="fixed inset-0 z-[500] hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeDetailSheet()"></div>
-        
-        <!-- الزر الثابت للإغلاق -->
         <button onclick="closeDetailSheet()" class="fixed top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-3xl border border-white/20 text-white flex items-center justify-center hover:bg-laserred active:scale-90 transition-all z-[9999] shadow-lg">
             <i class="fa-solid fa-xmark text-xl"></i>
         </button>
@@ -363,7 +361,7 @@
                 reprise: "Échange", admin: "Administration", contact: "Contact", 
                 price: "Prix demandé", engine: "Moteur", color: "Couleur",
                 contactSeller: "Négocier sur WhatsApp", soldBadge: "VENDUE", totalBikes: "Total Motos",
-                addedSuccess: "Ajouté au catalogue avec succès 🏍️🔥",
+                addedSuccess: "MOTO AJOUTÉE AU CATALOGUE EN DIRECT 🏍️🔥",
                 authTitle: "Système d'Administration", authDesc: "Veuillez entrer le code PIN (7777)", btnAdd: "Ajouter au Catalogue", adminDash: "Panneau d'Administration", btnLock: "Verrouiller",
                 addTitle: "Ajouter une moto", manageTitle: "Gérer le Stock", socialDesc: "Suivez-nous sur les réseaux sociaux"
             },
@@ -382,25 +380,34 @@
             }
         };
 
-        // الدالة التي تحدث الـ HTML بكل أمان دون التسبب في Crash
         function safeSetText(id, text) {
             const el = document.getElementById(id);
             if (el) el.innerHTML = text;
         }
 
-        window.addEventListener('DOMContentLoaded', async () => {
-            // جلب البيانات من السيرفر عند فتح الموقع
+        async function fetchMotosFromCloud() {
+            if (!supabaseClient) return false;
             try {
-                if (supabaseClient) {
-                    const { data, error } = await supabaseClient.from('motos_catalog').select('*').order('id', { ascending: false });
-                    if (!error && data && data.length > 0) {
-                        state.vehicles = data;
-                    } else {
-                        state.vehicles = demoWarehouseVehicles;
-                    }
+                const { data, error } = await supabaseClient
+                    .from('motos_catalog')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (!error && data) {
+                    state.vehicles = data;
+                    return true;
+                } else {
+                    console.error("Supabase load error:", error);
                 }
             } catch (err) {
-                console.error("Supabase load error:", err);
+                console.error("Cloud Connection Exception:", err);
+            }
+            return false;
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const success = await fetchMotosFromCloud();
+            if (!success || state.vehicles.length === 0) {
                 state.vehicles = demoWarehouseVehicles;
             }
 
@@ -481,7 +488,7 @@
             safeSetText('analyticsTotalValue', accumulatedValue.toFixed(0) + " M");
         }
 
-        // ================= IMAGE COMPRESSION =================
+        // ================= IMAGE COMPRESSION & UPLOAD =================
         function setupHiresOnTheFlyImageCompressor() {
             document.getElementById('imageInputLoader').addEventListener('change', function(e) {
                 const files = e.target.files;
@@ -499,7 +506,7 @@
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 
-                                const limitDim = 800;
+                                const limitDim = 600; // ضغط ممتاز لحفظ المساحة والسرعة
                                 let w = img.width, h = img.height;
                                 
                                 if (w > h) { if (w > limitDim) { h *= limitDim / w; w = limitDim; } } 
@@ -508,11 +515,11 @@
                                 canvas.width = w; canvas.height = h;
                                 ctx.drawImage(img, 0, 0, w, h);
                                 
-                                const base64Webp = canvas.toDataURL('image/jpeg', 0.60);
+                                const base64Webp = canvas.toDataURL('image/jpeg', 0.50);
                                 state.temporaryImages64.push(base64Webp);
                                 resolved++;
 
-                                safeSetText('compressorLog', `تم التجهيز ${resolved}/${files.length} صور`);
+                                safeSetText('compressorLog', `تم تجهيز وضغط ${resolved}/${files.length} صور بنجاح`);
                             };
                             img.src = evt.target.result;
                         };
@@ -531,7 +538,7 @@
 
             const btn = document.getElementById('btnSubmitAdd');
             btn.disabled = true;
-            btn.innerText = "جاري التحديث...";
+            btn.innerText = "جاري الحفظ في السيرفر...";
 
             const freshVehicle = {
                 id: Date.now(),
@@ -547,18 +554,27 @@
                 images: state.temporaryImages64
             };
 
+            // حفظ الدراجة في السيرفر Supabase أولاً
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient.from('motos_catalog').insert([freshVehicle]);
+                    if (error) {
+                        console.error("Supabase Save Error:", error);
+                        alert("حدث خطأ أثناء الاتصال بالسيرفر. يرجى التأكد من تطبيق الخطوة 1 (SQL Editor) بـ Supabase.");
+                        btn.disabled = false;
+                        btn.innerHTML = `<span id="lbl-btn-add">${lexicons[state.lang].btnAdd}</span> <i class="fa-solid fa-arrow-left"></i>`;
+                        return;
+                    }
+                } catch(err) { 
+                    console.error("Cloud Error:", err); 
+                }
+            }
+
             state.vehicles.unshift(freshVehicle);
             renderShowroomGrid();
             renderAdminStockList();
             buildRepriseTargetDropdown();
             calculateCorporateSaaSMetrics();
-
-            // حفظ الدراجة في السيرفر مباشرة
-            if (supabaseClient) {
-                try {
-                    await supabaseClient.from('motos_catalog').insert([freshVehicle]);
-                } catch(err) { console.error("Cloud Error:", err); }
-            }
 
             document.getElementById('ownerCarForm').reset();
             state.temporaryImages64 = [];
@@ -573,7 +589,7 @@
         }
 
         async function removeInventoryItem(id) {
-            if (confirm("هل أنت متأكد من الحذف النهائي؟")) {
+            if (confirm("هل أنت متأكد من الحذف النهائي لهاته الدراجة؟")) {
                 state.vehicles = state.vehicles.filter(v => v.id !== id);
                 renderShowroomGrid();
                 renderAdminStockList();
@@ -582,7 +598,7 @@
                 if (supabaseClient) {
                     try { await supabaseClient.from('motos_catalog').delete().eq('id', id); } catch(err) {}
                 }
-                triggerToastNotification("تم حذف الدراجة");
+                triggerToastNotification("تم حذف الدراجة من السيرفر");
             }
         }
 
@@ -750,7 +766,7 @@
                     </div>
 
                     <div class="bg-cardgray border-t border-white/5 text-zinc-400 hover:bg-motopistache hover:text-black text-center py-4 text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all flex items-center justify-center gap-2" onclick="openDetailSheet(${car.id})">
-                        <span>${sold ? lexicons[state.lang].soldBadge : lexicons[state.lang].touchDetails}</span>
+                        <span>${sold ? lexicons[state.lang].soldBadge : "اضغط للتفاصيل الكاملة"}</span>
                         <i class="fa-solid fa-chevron-up text-[9px] animate-bounce"></i>
                     </div>
                 </div>`;
