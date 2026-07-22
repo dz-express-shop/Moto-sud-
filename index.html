@@ -385,25 +385,25 @@
             if (el) el.innerHTML = text;
         }
 
-        async function fetchMotosFromCloud() {
-            if (!supabaseClient) return false;
-            try {
-                const { data, error } = await supabaseClient
-                    .from('motos_catalog')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+async function fetchMotosFromCloud() {
+    if (!supabaseClient) return false;
+    try {
+        const { data, error } = await supabaseClient
+            .from('motos_catalog')
+            .select('*')
+            .order('id', { ascending: false }); // الترتيب بحسب الـ ID المضمون
 
-                if (!error && data) {
-                    state.vehicles = data;
-                    return true;
-                } else {
-                    console.error("Supabase load error:", error);
-                }
-            } catch (err) {
-                console.error("Cloud Connection Exception:", err);
-            }
-            return false;
+        if (!error && data) {
+            state.vehicles = data;
+            return true;
+        } else {
+            console.error("Supabase load error:", error);
         }
+    } catch (err) {
+        console.error("Cloud Connection Exception:", err);
+    }
+    return false;
+}
 
         window.addEventListener('DOMContentLoaded', async () => {
             const success = await fetchMotosFromCloud();
